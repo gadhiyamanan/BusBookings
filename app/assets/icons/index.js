@@ -9,7 +9,7 @@ import goBackIcon from "./goBackIcon.png";
 import passwordIcon from "./passwordIcon.png";
 import hidePassword from "./hidePassword.png";
 import showPassword from "./showPassword.png";
-
+import calenderIcon from "./calenderIcon.png";
 export {
-    bookingsIcon,filledSeatIcon,helpIcon,homeIcon,myAccountIcon,unfilledSeat,userIcon,goBackIcon,passwordIcon,hidePassword,showPassword
+    bookingsIcon,filledSeatIcon,helpIcon,homeIcon,myAccountIcon,unfilledSeat,userIcon,goBackIcon,passwordIcon,hidePassword,showPassword,calenderIcon
 }

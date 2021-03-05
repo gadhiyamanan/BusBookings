@@ -11,7 +11,7 @@ import {
 export default function SelectPlaceScreen() {
   return (
    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-       <Text>bookings Screen</Text>
+       <Text>Select place Screen</Text>
    </View>
   );
 }
