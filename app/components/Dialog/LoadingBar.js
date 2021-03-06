@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     margin: 0,
     backgroundColor: 'rgba(0,0,0,0.3)',
     alignItems: 'center',
+    animationIn='fadeIn',
+    animationOut='fadeOut'
   },
   cardStyle: {
     backgroundColor: 'white',

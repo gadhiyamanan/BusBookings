@@ -13,9 +13,8 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-import {color} from 'react-native-reanimated';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
+
 import colors from '../../constants/colors';
 export default function CustomBottomTab({state, descriptors, navigation}) {
   useEffect(() => {
@@ -55,7 +54,7 @@ export default function CustomBottomTab({state, descriptors, navigation}) {
               }}
               style={styles.contentContainer}>
               <View
-                style={{height: windowHeight / 30, width: windowHeight / 30}}>
+                style={{height: verticalScale(23), width: verticalScale(23)}}>
                 <Image
                   source={options.icon}
                   style={[styles.image, {opacity: isFocused ? 1 : 0.5}]}
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: windowHeight / 20,
+    height: scale(35),
   },
   image: {
     height: '100%',
@@ -104,5 +103,5 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 15,
     borderTopEndRadius: 15,
   },
-  title: {color: colors.blue, fontSize: windowHeight / 60},
+  title: {color: colors.blue, fontSize: moderateScale(10)},
 });

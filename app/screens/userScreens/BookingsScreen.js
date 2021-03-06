@@ -8,10 +8,12 @@ import {
     StatusBar,
   } from 'react-native';
   import colors from "../../constants/colors";
+  import {Header} from '../../components/Header';
 export default function BookingsScreen() {
   return (
-   <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:colors.lightblue}}>
+   <>
+     <Header title="Home" isback={true}/>
        <Text>bookings Screen</Text>
-   </View>
+   </>
   );
 }

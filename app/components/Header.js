@@ -12,7 +12,9 @@ import {
   Image,
 } from 'react-native';
 import {goBackIcon} from '../assets/icons/index';
-
+import {useNavigation} from '@react-navigation/native';
+import {HeaderBackButton} from '@react-navigation/stack';
+import {moderateScale} from 'react-native-size-matters';
 import colors from '../constants/colors';
 
 export function Header({
@@ -22,6 +24,8 @@ export function Header({
   isback,
   ...other
 }) {
+  const navigation = useNavigation();
+
   return (
     <>
       <SafeAreaView style={{backgroundColor: colors.blue}} />
@@ -32,7 +36,13 @@ export function Header({
         </Text>
         {isback ? (
           <TouchableOpacity style={styles.iconContainer} {...other}>
-            <Image source={goBackIcon} style={styles.image} />
+            <HeaderBackButton
+              backImage={() => (
+                <Image source={goBackIcon} style={styles.image} />
+              )}
+              onPress={() => navigation.goBack()}
+              labelVisible={false}
+            />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -47,9 +57,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-   
   },
-  titleText: {fontSize: 27, color: 'white'},
+  titleText: {fontSize: moderateScale(18), color: 'white'},
   iconContainer: {position: 'absolute', alignItems: 'center', left: 10},
   image: {height: 27, width: 27, resizeMode: 'contain'},
 });

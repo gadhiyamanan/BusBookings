@@ -10,6 +10,7 @@ import passwordIcon from "./passwordIcon.png";
 import hidePassword from "./hidePassword.png";
 import showPassword from "./showPassword.png";
 import calenderIcon from "./calenderIcon.png";
+import leftarrowIcon from "./leftarrow.png";
 export {
-    bookingsIcon,filledSeatIcon,helpIcon,homeIcon,myAccountIcon,unfilledSeat,userIcon,goBackIcon,passwordIcon,hidePassword,showPassword,calenderIcon
+    bookingsIcon,filledSeatIcon,helpIcon,homeIcon,myAccountIcon,unfilledSeat,userIcon,goBackIcon,passwordIcon,hidePassword,showPassword,calenderIcon,leftarrowIcon
 }
