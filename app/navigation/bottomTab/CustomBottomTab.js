@@ -97,11 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: 'white',
     borderTopWidth: 1,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
     borderColor: colors.blue,
-    borderTopStartRadius: 15,
-    borderTopEndRadius: 15,
   },
   title: {color: colors.blue, fontSize: moderateScale(10)},
 });

@@ -44,7 +44,7 @@ export function Header({
               labelVisible={false}
             />
           </TouchableOpacity>
-        ) : null}
+        ) :null }
       </View>
     </>
   );
@@ -60,5 +60,5 @@ const styles = StyleSheet.create({
   },
   titleText: {fontSize: moderateScale(18), color: 'white'},
   iconContainer: {position: 'absolute', alignItems: 'center', left: 10},
-  image: {height: 27, width: 27, resizeMode: 'contain'},
+  image: {height: 22, width: 22, resizeMode: 'contain'},
 });

@@ -11,6 +11,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {calenderIcon} from '../../assets/icons';
 import moment from 'moment';
 import {Header} from '../../components/Header';
@@ -25,6 +26,9 @@ export default function HomeScreen({navigation}) {
   const [destinationCity, setDestinationCity] = useState();
   const [isCalendeShow, setIsCalenderShow] = useState(false);
   const [date, setDate] = useState(new Date());
+  function __onSeachBusPress() {
+    navigation.navigate("selectBus")
+  }
   return (
     <>
       <CalenderPicker
@@ -84,22 +88,22 @@ export default function HomeScreen({navigation}) {
               }}>
               <Image source={calenderIcon} style={styles.calenderImage} />
             </TouchableOpacity>
-            <View style={{marginLeft: 40}}>
+            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+            <View style={{marginLeft: scale(40)}}>
               <Text style={styles.dateText}>
                 {moment(date).format('Do MMMM')}
               </Text>
             </View>
-            <View style={{marginLeft: 60}}>
+            <View>
               <Text style={styles.dateText}>
                 {moment(date).calendar({
                   sameDay: '[Today]',
                   nextDay: '[Tomorrow]',
                   nextWeek: 'dddd',
-                  lastDay: '[Yesterday]',
-                  lastWeek: '[Last] dddd',
-                  sameElse: 'DD/MM/YYYY',
+                  sameElse: 'L',
                 })}
               </Text>
+            </View>
             </View>
           </View>
         </View>
@@ -107,6 +111,7 @@ export default function HomeScreen({navigation}) {
         <CustomButton
           title="Search Buses"
           buttonContainerStyle={{marginHorizontal: 15}}
+          onPress={()=>__onSeachBusPress()}
         />
       </ScrollView>
     </>
