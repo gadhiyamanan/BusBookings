@@ -5,13 +5,15 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 import colors from '../../constants/colors';
 
-export function CalenderPicker({isModalVisible,...other}) {
- 
+export function CalenderPicker({isModalVisible, ...other}) {
   return (
-    <Modal visible={isModalVisible} style={styles.modalStyle}  animationIn='fadeIn'
-    animationOut='fadeOut'>
+    <Modal
+      visible={isModalVisible}
+      style={styles.modalStyle}
+      animationIn="fadeIn"
+      animationOut="fadeOut">
       <Calendar
-      {...other}
+        {...other}
         minDate={Date()}
         monthFormat={'MMM yyyy'}
         firstDay={1}
@@ -22,8 +24,8 @@ export function CalenderPicker({isModalVisible,...other}) {
           borderWidth: 1,
           borderColor: colors.blue,
           borderRadius: 8,
-          marginHorizontal:20,
-          padding:20
+          marginHorizontal: 20,
+          padding: 20,
         }}
         theme={{
           textSectionTitleColor: '#b6c1cd',
@@ -50,5 +52,4 @@ const styles = StyleSheet.create({
     margin: 0,
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
-  
 });

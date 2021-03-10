@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}) {
   const [isCalendeShow, setIsCalenderShow] = useState(false);
   const [date, setDate] = useState(new Date());
   function __onSeachBusPress() {
-    navigation.navigate("selectBus")
+    navigation.navigate('selectBus');
   }
   return (
     <>
@@ -88,22 +88,22 @@ export default function HomeScreen({navigation}) {
               }}>
               <Image source={calenderIcon} style={styles.calenderImage} />
             </TouchableOpacity>
-            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-            <View style={{marginLeft: scale(40)}}>
-              <Text style={styles.dateText}>
-                {moment(date).format('Do MMMM')}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.dateText}>
-                {moment(date).calendar({
-                  sameDay: '[Today]',
-                  nextDay: '[Tomorrow]',
-                  nextWeek: 'dddd',
-                  sameElse: 'L',
-                })}
-              </Text>
-            </View>
+            <View style={styles.calendar}>
+              <View>
+                <Text style={styles.dateText}>
+                  {moment(date).format('Do MMMM')}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.dateText}>
+                  {moment(date).calendar({
+                    sameDay: '[Today]',
+                    nextDay: '[Tomorrow]',
+                    nextWeek: 'dddd',
+                    sameElse: 'L',
+                  })}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -111,7 +111,7 @@ export default function HomeScreen({navigation}) {
         <CustomButton
           title="Search Buses"
           buttonContainerStyle={{marginHorizontal: 15}}
-          onPress={()=>__onSeachBusPress()}
+          onPress={() => __onSeachBusPress()}
         />
       </ScrollView>
     </>
@@ -180,4 +180,5 @@ const styles = StyleSheet.create({
   },
   calenderImage: {height: '100%', width: '100%', resizeMode: 'contain'},
   dateText: {fontSize: 20, color: colors.blue},
+  calendar: {flexDirection: 'row', justifyContent: 'space-around', flex: 1},
 });

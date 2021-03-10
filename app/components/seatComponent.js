@@ -14,31 +14,31 @@ import {
 import colors from '../constants/colors';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 
-export function SeatComponent({isAvailable, isbooked, ischecked,seatNumber,...other}) {
+export function SeatComponent({seatStatus,seatNumber,seatContainerStyle,...other}) {
+  let bgcolor=""
+  if(seatStatus===0)bgcolor="#4CBB17" //available seat status 
+  if(seatStatus===1)bgcolor="#707070" //booked seat status 
+  if(seatStatus===2)bgcolor=colors.blue //selected seat status 
   return (
     <TouchableOpacity
       style={[
         styles.seatContainer,
         {
-          backgroundColor: isAvailable
-            ? '#4CBB17'
-            : isbooked
-            ? '#707070'
-            : ischecked
-            ? colors.blue
-            : 'white',
+          backgroundColor: bgcolor
         },
-      ]} disabled={isbooked} {...other}>
+      ,seatContainerStyle]} disabled={seatStatus===1} {...other}>
       <Text style={{fontSize: scale(15), color: 'white'}}>{seatNumber}</Text>
     </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({
   seatContainer: {
+  
     height: scale(35),
     width: scale(35),
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
 });
