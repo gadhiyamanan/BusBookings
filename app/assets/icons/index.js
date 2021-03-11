@@ -13,7 +13,7 @@ import calenderIcon from './calenderIcon.png';
 import leftarrowIcon from './leftarrow.png';
 import ratingIcon from './ratingIcon.png';
 import filledRatingIcon from './filledRatingIcon.png';
-
+import ArrowIcon from './ArrowIcon.png';
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -30,4 +30,5 @@ export {
   leftarrowIcon,
   ratingIcon,
   filledRatingIcon,
+  ArrowIcon
 };

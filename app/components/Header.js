@@ -32,7 +32,7 @@ export function Header({
       <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
       <View style={[styles.headerContainer, headerContainerStyle]}>
         <Text style={[styles.titleText, titleTextStyle]}>
-          {title ? title : 'set title'}
+          {title ? title : ""}
         </Text>
         {isback ? (
           <TouchableOpacity style={styles.iconContainer} {...other}>

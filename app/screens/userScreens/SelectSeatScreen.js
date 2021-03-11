@@ -89,7 +89,6 @@ export default class SelectSeatScreen extends React.Component {
   }
 
   componentDidMount() {
-    
     let seats = 0;
     this.state.seatmap.map((item, index) => {
       if (item !== 0) {
@@ -101,11 +100,17 @@ export default class SelectSeatScreen extends React.Component {
       seatmap: createNewSeat,
     });
   }
-
+  __onNextPress = () => {
+    this.props.navigation.navigate('reservation', {
+      seatInfo: {
+        amount: this.state.selectedSeats.length * price,
+        seats: this.state.selectedSeats,
+      },
+    });
+  };
   __onSeatSelect = (seatIndex) => {
     let privousSelected = this.state.selectedSeats;
 
-    // console.log(this.state.selectedSeats.filter((item) => item === seatIndex));
     if (
       this.state.selectedSeats.filter((item) => item === seatIndex).length === 0
     ) {
@@ -143,6 +148,7 @@ export default class SelectSeatScreen extends React.Component {
     return (
       <>
         <Header title="Select Seat" isback />
+        <View style={{height: 10}} />
         <View style={styles.seatDescriptionConatiner}>
           <View style={styles.alignCenter}>
             <SeatComponent disabled seatStatus={0} />
@@ -157,7 +163,7 @@ export default class SelectSeatScreen extends React.Component {
             <Text style={styles.imageText}>Booked Seats</Text>
           </View>
         </View>
-        <View style={{height: 20}} />
+        <View style={{height: 10}} />
         <View style={styles.cardContainer}>
           <FlatList
             data={this.state.seatmap}
@@ -191,9 +197,17 @@ export default class SelectSeatScreen extends React.Component {
         </View>
         <CustomButton
           title="Next"
-          buttonContainerStyle={{margin: 10, height: verticalScale(50)}}
-          onPress={() => this.props.navigation.navigate("reservation",{seatInfo:{amount:this.state.selectedSeats.length * price,seats:this.state.selectedSeats.length}})}
+          buttonContainerStyle={{
+            margin: 10,
+            height: verticalScale(50),
+            backgroundColor: !this.state.selectedSeats.length
+              ? colors.lightgrey
+              : colors.lightblue,
+          }}
+          onPress={this.__onNextPress}
+          disabled={!this.state.selectedSeats.length}
         />
+
         <SafeAreaView />
       </>
     );
@@ -216,7 +230,6 @@ const styles = StyleSheet.create({
   seatDescriptionConatiner: {
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-    marginTop: 5,
   },
   cardContainer: {
     flex: 1,

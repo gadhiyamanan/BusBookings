@@ -7,7 +7,6 @@ import {
   Text,
   StatusBar,
   Touchable,
-  
   TouchableOpacity,
 } from 'react-native';
 import colors from '../constants/colors';
@@ -18,15 +17,13 @@ export function CustomButton({
   ...other
 }) {
   return (
-    <SafeAreaView>
-      <TouchableOpacity
-        style={[styles.buttonContainer, buttonContainerStyle]}
-        {...other}>
-        <Text style={[styles.buttontitle, buttontitleStyle]}>
-          {title ? title : 'set the title'}
-        </Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <TouchableOpacity
+      style={[styles.buttonContainer, buttonContainerStyle]}
+      {...other}>
+      <Text style={[styles.buttontitle, buttontitleStyle]}>
+        {title ? title : 'set the title'}
+      </Text>
+    </TouchableOpacity>
   );
 }
 

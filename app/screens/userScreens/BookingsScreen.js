@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, FlatList} from 'react-native';
+import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import {Header} from '../../components/Header';
 import {RatingBar} from '../../components/RatingBar';
@@ -13,6 +13,9 @@ const DATA = [
     stops: '2 stops',
     stars: 4,
     price: 2000,
+    from: 'Surat',
+    to: 'Ahmedabad',
+    date: '14/02/2021',
   },
   {
     title: 'DEF Transport',
@@ -22,6 +25,9 @@ const DATA = [
     stops: '2 stops',
     stars: 3,
     price: 2500,
+    date: '18/03/2021',
+    from: 'Bhavnagar',
+    to: 'Ahmedabad',
   },
 
   {
@@ -32,6 +38,9 @@ const DATA = [
     stops: '2 stops',
     stars: 5,
     price: 3000,
+    date: '25/01/2021',
+    from: 'Mehsana',
+    to: 'Dahod',
   },
   {
     title: 'ABC Transport',
@@ -41,19 +50,26 @@ const DATA = [
     stops: '2 stops',
     stars: 5,
     price: 3000,
+    date: '10/02/2021',
+    from: 'Surat',
+    to: 'Patan',
   },
 ];
 
-export default function BookingsScreen() {
+export default function BookingsScreen({navigation}) {
+  const __onTicketPress=(item)=>{
+    navigation.navigate("ticketScreen",{bookedBusDetail:i})
+  }
   const renderItem = ({item}) => {
     return (
+      <TouchableOpacity onPress={()=>__onTicketPress(item)}>
       <View style={styles.cardContainer}>
-        <View style={styles.titleContiner}>
-          <Text style={styles.title}>{item.title}</Text>
-        </View>
-        <View style={styles.facilityContiner}>
-          <Text style={{opacity: 0.5}}>{item.facility}</Text>
-        </View>
+        <View style={styles.space} />
+        <Text style={styles.title}>{item.title}</Text>
+
+        <View style={styles.space} />
+        <Text style={{opacity: 0.5}}>{item.facility}</Text>
+
         <View style={styles.descriptionContainer}>
           <Text>{item.seats}</Text>
           <View style={styles.roundView} />
@@ -61,21 +77,23 @@ export default function BookingsScreen() {
           <View style={styles.roundView} />
           <Text>{item.stops}</Text>
         </View>
-        <View style={styles.raingPriceContainer}>
-          <RatingBar
-            getStar={(data) => null}
-            ratingImageStyle={{height: 17, width: 17}}
-            initial={item.stars}
-            isdisabled
-          />
-          <View style={styles.buttonContainer}>
-            <Text style={{color: 'white'}}>₹ {item.price}</Text>
+        <View style={styles.space} />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View>
+            <Text style={{color: colors.blue}}>
+              {item.from} To {item.to}
+            </Text>
+          </View>
+
+          <View>
+            <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
           </View>
         </View>
+        <View style={styles.space} />
       </View>
+      </TouchableOpacity>
     );
   };
-  //const [stars, setStars] = useState([]);
 
   return (
     <>
@@ -95,7 +113,7 @@ const styles = StyleSheet.create({
   ratingImage: {height: 30, width: 30},
   filled: {tintColor: '#FFDF00'},
   cardContainer: {
-    height: 150,
+    //height: 150,
     borderRadius: 13,
     marginHorizontal: 15,
     marginVertical: 10,
@@ -108,12 +126,12 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     backgroundColor: '#ffffff',
     elevation: 4,
+    paddingHorizontal: 15,
   },
-  titleContiner: {marginHorizontal: 15, marginTop: 15},
-  title: {fontSize: 18, fontWeight: 'bold'},
-  facilityContiner: {marginHorizontal: 15, marginTop: 15},
+
+  title: {fontSize: 18, fontWeight: 'bold', color: colors.blue},
+
   descriptionContainer: {
-    marginHorizontal: 15,
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -128,19 +146,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 5,
   },
-  raingPriceContainer: {
-    alignItems: 'center',
-    marginHorizontal: 15,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  buttonContainer: {
-    height: 28,
-    width: 100,
-    backgroundColor: colors.blue,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  space: {
+    height: 10,
   },
 });
