@@ -89,6 +89,7 @@ export default class SelectSeatScreen extends React.Component {
   }
 
   componentDidMount() {
+    
     let seats = 0;
     this.state.seatmap.map((item, index) => {
       if (item !== 0) {
@@ -104,14 +105,12 @@ export default class SelectSeatScreen extends React.Component {
   __onSeatSelect = (seatIndex) => {
     let privousSelected = this.state.selectedSeats;
 
-    console.log(this.state.selectedSeats.filter((item) => item === seatIndex));
+    // console.log(this.state.selectedSeats.filter((item) => item === seatIndex));
     if (
       this.state.selectedSeats.filter((item) => item === seatIndex).length === 0
     ) {
-      console.log('in');
       privousSelected.push(seatIndex);
     } else {
-      console.log('out');
       privousSelected = this.state.selectedSeats.filter(
         (item) => item !== seatIndex,
       );
@@ -193,6 +192,7 @@ export default class SelectSeatScreen extends React.Component {
         <CustomButton
           title="Next"
           buttonContainerStyle={{margin: 10, height: verticalScale(50)}}
+          onPress={() => this.props.navigation.navigate("reservation",{seatInfo:{amount:this.state.selectedSeats.length * price,seats:this.state.selectedSeats.length}})}
         />
         <SafeAreaView />
       </>
