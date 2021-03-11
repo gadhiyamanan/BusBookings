@@ -5,6 +5,7 @@ import SelectSeatScreen from "../screens/userScreens/SelectSeatScreen";
 import ReservationScreen from "../screens/userScreens/ReservationScreen";
 import SelectPlaceScreen from "../screens/userScreens/SelectPlaceScreen";
 import DashBoardBottomTab from "./bottomTab/DashBoardBottomTab";
+import TicketScreen from "../screens/userScreens/TicketScreen"
 const Stack = createStackNavigator();
 export default function DashBoardStacks() {
   return (
@@ -14,6 +15,7 @@ export default function DashBoardStacks() {
       <Stack.Screen name="selectSeat" component={SelectSeatScreen} options= {{headerShown: false}}/>
       <Stack.Screen name="reservation" component={ReservationScreen} options= {{headerShown: false}}/>
       <Stack.Screen name="selectPlace" component={SelectPlaceScreen}options= {{headerShown: false}} />
+      <Stack.Screen name="ticketScreen" component={TicketScreen} options= {{headerShown: false}} />
     </Stack.Navigator>
   );
 }
