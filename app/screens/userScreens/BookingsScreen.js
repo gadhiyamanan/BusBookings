@@ -16,6 +16,10 @@ const DATA = [
     from: 'Surat',
     to: 'Ahmedabad',
     date: '14/02/2021',
+    seats: [1, 5],
+    busNo: 'GJ05RJ2456',
+    ticketId: 'HVHH231123',
+    transactionId: '13354HVHH231123',
   },
   {
     title: 'DEF Transport',
@@ -28,6 +32,10 @@ const DATA = [
     date: '18/03/2021',
     from: 'Bhavnagar',
     to: 'Ahmedabad',
+    seats: [1, 5, 12, 25],
+    busNo: 'GJ05RJ2456',
+    ticketId: 'HVHH231123',
+    transactionId: '13354HVHH231123',
   },
 
   {
@@ -41,6 +49,10 @@ const DATA = [
     date: '25/01/2021',
     from: 'Mehsana',
     to: 'Dahod',
+    seats: [1, 5, 12, 25, 26, 34],
+    busNo: 'GJ05RJ2456',
+    ticketId: 'HVHH231123',
+    transactionId: '13354HVHH231123',
   },
   {
     title: 'ABC Transport',
@@ -53,44 +65,50 @@ const DATA = [
     date: '10/02/2021',
     from: 'Surat',
     to: 'Patan',
+    seats: [1, 5, 12, 25, 40, 26, 34, 38],
+    busNo: 'GJ05RJ2456',
+    ticketId: 'HVHH231123',
+    transactionId: '13354HVHH231123',
   },
 ];
 
 export default function BookingsScreen({navigation}) {
-  const __onTicketPress=(item)=>{
-    navigation.navigate("ticketScreen",{bookedBusDetail:i})
-  }
+  const __onTicketPress = (item) => {
+    console.log("item",item);
+    navigation.navigate('ticketScreen', {bookedBusDetail: item});
+  };
   const renderItem = ({item}) => {
+    console.log("list",item);
     return (
-      <TouchableOpacity onPress={()=>__onTicketPress(item)}>
-      <View style={styles.cardContainer}>
-        <View style={styles.space} />
-        <Text style={styles.title}>{item.title}</Text>
+      <TouchableOpacity onPress={() => __onTicketPress(item)}>
+        <View style={styles.cardContainer}>
+          <View style={styles.space} />
+          <Text style={styles.title}>{item.title}</Text>
 
-        <View style={styles.space} />
-        <Text style={{opacity: 0.5}}>{item.facility}</Text>
+          <View style={styles.space} />
+          <Text style={{opacity: 0.5}}>{item.facility}</Text>
 
-        <View style={styles.descriptionContainer}>
-          <Text>{item.seats}</Text>
-          <View style={styles.roundView} />
-          <Text>{item.duration}</Text>
-          <View style={styles.roundView} />
-          <Text>{item.stops}</Text>
-        </View>
-        <View style={styles.space} />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View>
-            <Text style={{color: colors.blue}}>
-              {item.from} To {item.to}
-            </Text>
+          <View style={styles.descriptionContainer}>
+            <Text>{item.seats.length} seats</Text>
+            <View style={styles.roundView} />
+            <Text>{item.duration}</Text>
+            <View style={styles.roundView} />
+            <Text>{item.stops}</Text>
           </View>
+          <View style={styles.space} />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Text style={{color: colors.blue}}>
+                {item.from} To {item.to}
+              </Text>
+            </View>
 
-          <View>
-            <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
+            <View>
+              <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
+            </View>
           </View>
+          <View style={styles.space} />
         </View>
-        <View style={styles.space} />
-      </View>
       </TouchableOpacity>
     );
   };

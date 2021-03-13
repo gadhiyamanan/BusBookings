@@ -29,7 +29,7 @@ export default function LoginScreen({navigation}) {
         <View style={styles.loginContainer}>
           <Image
             source={logo}
-            style={{height: 120, width: 120, resizeMode: 'contain'}}
+            style={styles.image}
           />
           <Text style={styles.weclcomeFont}>Welcome back!</Text>
 
@@ -117,4 +117,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     paddingBottom: 10,
   },
+  image:{height: 120, width: 120, resizeMode: 'contain'}
 });

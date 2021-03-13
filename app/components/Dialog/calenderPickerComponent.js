@@ -11,9 +11,12 @@ export function CalenderPicker({isModalVisible, ...other}) {
       visible={isModalVisible}
       style={styles.modalStyle}
       animationIn="fadeIn"
-      animationOut="fadeOut">
+      animationOut="fadeOut"
+      onBackButtonPress={() =>{}}
+      onBackdropPress={() => toggleModal()}>
       <Calendar
         {...other}
+
         minDate={Date()}
         monthFormat={'MMM yyyy'}
         firstDay={1}
