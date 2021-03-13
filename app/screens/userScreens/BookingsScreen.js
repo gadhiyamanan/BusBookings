@@ -74,11 +74,9 @@ const DATA = [
 
 export default function BookingsScreen({navigation}) {
   const __onTicketPress = (item) => {
-    console.log("item",item);
     navigation.navigate('ticketScreen', {bookedBusDetail: item});
   };
   const renderItem = ({item}) => {
-    console.log("list",item);
     return (
       <TouchableOpacity onPress={() => __onTicketPress(item)}>
         <View style={styles.cardContainer}>
@@ -160,7 +158,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 2.5,
-
     marginLeft: 10,
     marginRight: 5,
   },

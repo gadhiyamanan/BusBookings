@@ -12,7 +12,7 @@ import {
   Touchable,
 } from 'react-native';
 import {ratingIcon,filledRatingIcon} from '../assets/icons/index';
-export function RatingBar({starsCount = 5, initial, isdisabled, getStar,ratingImageStyle}) {
+export function RatingBar({starsCount = 5, containerStyle,initial, isdisabled, getStar,ratingImageStyle}) {
   let stars = [];
   for (let i = 0; i < starsCount; i++) {
     stars.push((i + 1).toString());
@@ -21,7 +21,7 @@ export function RatingBar({starsCount = 5, initial, isdisabled, getStar,ratingIm
   const [activeStars, setActiveStars] = useState(initial);
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={[{flexDirection: 'row'},containerStyle]}>
       {stars.map((item) => {
         return (
           <TouchableOpacity

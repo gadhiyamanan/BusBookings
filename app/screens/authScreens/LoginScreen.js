@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   weclcomeFont: {
     fontFamily: fonts.PacificoRegular,
     color: colors.blue,
-    fontWeight: 'bold',
     fontSize: 40,
     paddingBottom: 10,
   },
