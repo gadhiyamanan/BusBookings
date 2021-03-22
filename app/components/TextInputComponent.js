@@ -24,11 +24,16 @@ export function TextInputComponent({
   passwordIconStyle,
   ...other
 }) {
-  const [isHidePassword, setIsHidePassword] = useState(true);
+  const [isHidePassword, setIsHidePassword] = useState(passwordfield);
   return (
     <>
       <SafeAreaView />
-      <View style={[styles.textInputContainer, textInputContainerStyle]}>
+      <View
+        style={[
+          styles.textInputContainer,
+          {paddingLeft: source ? 0 : 25},
+          textInputContainerStyle,
+        ]}>
         {source ? (
           <>
             <View style={[styles.imageContainer, imageContainerStyle]}>
@@ -92,6 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 10,
   },
-  textInput: {fontSize: 20, flex: 1,paddingLeft:10},
+  textInput: {fontSize: 20, flex: 1},
   line: {width: 1, height: 50, backgroundColor: 'lightgrey'},
 });

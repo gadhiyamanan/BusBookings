@@ -40,7 +40,7 @@ export default function LoginScreen({navigation}) {
               <TextInputComponent
                 source={passwordIcon}
                 placeholder="Enter Password"
-                passwordfield={true}
+                passwordfield
               />
               <View style={{height: 10}} />
               <TouchableOpacity
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
     justifyContent: 'center',
-
     alignItems: 'center',
   },
   registerContainer: {justifyContent: 'center', alignItems: 'center'},

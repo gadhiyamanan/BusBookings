@@ -1,3 +1,92 @@
+// import React from 'react';
+// import {
+//   SafeAreaView,
+//   StyleSheet,
+//   ScrollView,
+//   View,
+//   Text,
+//   StatusBar,
+//   KeyboardAvoidingView,
+//   Platform,
+//   Image,
+// } from 'react-native';
+// import colors from '../../constants/colors';
+// import {TextInputComponent} from '../../components/TextInputComponent';
+// import {CustomButton} from '../../components/Buttoncomponent';
+// import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+// import {Courgette_Regular, Lobster_Regular} from '../../constants/fonts';
+// import {StackActions} from '@react-navigation/native';
+// import {signuplogo} from '../../assets/Images';
+// export default function RegisterScreen({navigation}) {
+//   console.log(navigation);
+//   function __onSignUpPress(navigation) {
+//     navigation.dispatch(StackActions.replace('daskBoardStack'));
+//   }
+//   return (
+//     <>
+//       <SafeAreaView />
+
+//       <KeyboardAwareScrollView
+//         style={{padding: 15}}
+//         showsVerticalScrollIndicator={false}>
+//         <View style={{height: 10}} />
+//         <View style={{justifyContent: 'center', alignItems: 'center'}}>
+//           <Image
+//             source={signuplogo}
+//             style={{height: 100, width: 100, resizeMode: 'contain'}}
+//           />
+//         </View>
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="First Name"
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="LastName"
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="Mobile Number"
+//           keyboardType="phone-pad"
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="Email"
+//           keyboardType="email-address"
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="Password"
+//           passwordfield={true}
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <TextInputComponent
+//           textInputContainerStyle={{borderColor: colors.blue}}
+//           placeholder="Confirm Password"
+//           passwordfield={true}
+//         />
+//         <View style={styles.spacebtnTextInput} />
+//         <View style={{height: 15}} />
+//         <CustomButton
+//           title="SIGN UP"
+//           onPress={() => {
+//             __onSignUpPress(navigation);
+//           }}
+//         />
+//         <View style={{height: 30}} />
+//       </KeyboardAwareScrollView>
+//     </>
+//   );
+// }
+// const styles = StyleSheet.create({
+//   spacebtnTextInput: {height: 15},
+// });
+
 import React from 'react';
 import {
   SafeAreaView,
@@ -6,83 +95,100 @@ import {
   View,
   Text,
   StatusBar,
-  KeyboardAvoidingView,
-  Platform,
+  Touchable,
+  TouchableOpacity,
   Image,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../constants/colors';
+import {userIcon, passwordIcon} from '../../assets/icons/index';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {CustomButton} from '../../components/Buttoncomponent';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Courgette_Regular, Lobster_Regular} from '../../constants/fonts';
+import fonts from '../../constants/fonts';
+import {logo, signuplogo} from '../../assets/Images';
 import {StackActions} from '@react-navigation/native';
-import {signuplogo} from '../../assets/Images';
-export default function RegisterScreen({navigation}) {
-  console.log(navigation);
-  function __onSignUpPress(navigation) {
-    navigation.dispatch(StackActions.replace('daskBoardStack'));
-  }
+import {Header} from '../../components/Header';
+export default function LoginScreen({navigation}) {
   return (
-    <>
-      <SafeAreaView />
-
+    <View style={styles.container}>
       <KeyboardAwareScrollView
-        style={{padding: 15}}
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
         showsVerticalScrollIndicator={false}>
-        <View style={{height: 10}} />
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Image
-            source={signuplogo}
-            style={{height: 100, width: 100, resizeMode: 'contain'}}
-          />
+        <Header
+          isback
+          headerContainerStyle={{backgroundColor: 'white'}}
+          iconStyle={{tintColor: colors.blue}}
+        />
+        <View style={styles.loginContainer}>
+          <Image source={signuplogo} style={styles.image} />
+          <View style={{width: '100%', padding: 30}}>
+            <View style={styles.cardContainer}>
+              <TextInputComponent placeholder="Enter Full Name" />
+              <View style={{height: 10}} />
+              <TextInputComponent placeholder="Enter Email" />
+              <View style={{height: 10}} />
+              <TextInputComponent
+                placeholder="Enter Password"
+                passwordfield
+              />
+              <View style={{height: 10}} />
+              <TextInputComponent
+                placeholder="Confirm Password"
+                passwordfield
+              />
+              <View style={{height: 30}} />
+              <CustomButton
+                title={'Sign Up'}
+                buttonContainerStyle={{backgroundColor: 'white'}}
+                buttontitleStyle={{color: colors.blue}}
+                onPress={() => {
+                  navigation.dispatch(StackActions.replace('daskBoardStack'));
+                }}
+              />
+            </View>
+          </View>
         </View>
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="First Name"
-        />
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="LastName"
-        />
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="Mobile Number"
-          keyboardType="phone-pad"
-        />
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="Email"
-          keyboardType="email-address"
-        />
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="Password"
-          passwordfield={true}
-        />
-        <View style={styles.spacebtnTextInput} />
-        <TextInputComponent
-          textInputContainerStyle={{borderColor: colors.blue}}
-          placeholder="Confirm Password"
-          passwordfield={true}
-        />
-        <View style={styles.spacebtnTextInput} />
-        <View style={{height: 15}} />
-        <CustomButton
-          title="SIGN UP"
-          onPress={() => {
-            __onSignUpPress(navigation);
-          }}
-        />
-        <View style={{height: 30}} />
       </KeyboardAwareScrollView>
-    </>
+
+      <SafeAreaView />
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
-  spacebtnTextInput: {height: 15},
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  loginContainer: {
+    flex: 1,
+    justifyContent: 'center',
+
+    alignItems: 'center',
+  },
+  registerContainer: {justifyContent: 'center', alignItems: 'center'},
+  cardContainer: {
+    backgroundColor: colors.blue,
+    width: '100%',
+    padding: 20,
+    borderRadius: 20,
+  },
+  register: {
+    width: '100%',
+
+    borderTopWidth: 1,
+    borderColor: 'lightgrey',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    flexDirection: 'row',
+    paddingVertical: 15,
+  },
+  weclcomeFont: {
+    fontFamily: fonts.PacificoRegular,
+    color: colors.blue,
+    fontSize: 40,
+    paddingBottom: 10,
+  },
+  image: {height: 120, width: 120, resizeMode: 'contain'},
 });

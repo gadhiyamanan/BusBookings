@@ -43,18 +43,16 @@ export default function TicketScreen({route}) {
           <View style={{height: verticalScale(20)}} />
           <View style={styles.descriptionContainer}>
             <View style={styles.leftSubDescriptionContainer}>
-              <Text style={styles.lightText}>Date</Text>
+              <Text style={styles.lightText}>Journey Date</Text>
               <Text style={styles.darkText}>{bookedBusDetail.date}</Text>
               <View style={styles.space} />
               <Text style={styles.lightText}>Seats</Text>
               <Text style={styles.dark}>{bookedBusDetail.seats.length}</Text>
               <View style={styles.space} />
-              <Text style={styles.lightText}>Ticket Id</Text>
-              <Text style={styles.darkText}>{bookedBusDetail.ticketId}</Text>
             </View>
             <View style={styles.rightSubDescriptionContainer}>
-              <Text style={styles.lightText}>Date</Text>
-              <Text style={styles.darkText}>{bookedBusDetail.date}</Text>
+              <Text style={styles.lightText}>Ticket Id</Text>
+              <Text style={styles.darkText}>{bookedBusDetail.ticketId}</Text>
               <View style={styles.space} />
               <Text style={styles.lightText}>Seat No</Text>
               <FlatList
@@ -64,10 +62,18 @@ export default function TicketScreen({route}) {
                 numColumns={5}
               />
               <View style={styles.space} />
+            </View>
+          </View>
+          <View style={styles.descriptionContainer}>
+            <View style={styles.leftSubDescriptionContainer}>
               <Text style={styles.lightText}>Transaction Id</Text>
               <Text style={styles.darkText}>
                 {bookedBusDetail.transactionId}
               </Text>
+            </View>
+            <View style={styles.rightSubDescriptionContainer}>
+              <Text style={styles.lightText}>Price</Text>
+              <Text style={styles.darkText}>₹ {bookedBusDetail.price}</Text>
             </View>
           </View>
           <View style={{height: verticalScale(35)}} />

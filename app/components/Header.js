@@ -22,6 +22,7 @@ export function Header({
   headerContainerStyle,
   titleTextStyle,
   isback,
+  iconStyle,
   ...other
 }) {
   const navigation = useNavigation();
@@ -32,19 +33,19 @@ export function Header({
       <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
       <View style={[styles.headerContainer, headerContainerStyle]}>
         <Text style={[styles.titleText, titleTextStyle]}>
-          {title ? title : ""}
+          {title ? title : ''}
         </Text>
         {isback ? (
           <TouchableOpacity style={styles.iconContainer} {...other}>
             <HeaderBackButton
               backImage={() => (
-                <Image source={goBackIcon} style={styles.image} />
+                <Image source={goBackIcon} style={[styles.image, iconStyle]} />
               )}
               onPress={() => navigation.goBack()}
               labelVisible={false}
             />
           </TouchableOpacity>
-        ) :null }
+        ) : null}
       </View>
     </>
   );
