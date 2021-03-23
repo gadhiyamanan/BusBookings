@@ -16,7 +16,7 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import QRCode from 'react-native-qrcode-svg';
 export default function ReservationScreen({navigation, route}) {
   const {seatInfo} = route.params;
-  console.log(seatInfo);
+  
 
   return (
     <>

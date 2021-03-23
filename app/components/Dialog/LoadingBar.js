@@ -3,7 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
 import { loading } from "../../assets/loadings/index";
-export function LoadingBar({visible}) {
+import colors from '../../constants/colors';
+export  function LoadingBar({visible}) {
   return (
     <Modal visible={visible} style={styles.modalStyle}>
       <View style={styles.cardStyle}>
@@ -23,8 +24,8 @@ const styles = StyleSheet.create({
     margin: 0,
     backgroundColor: 'rgba(0,0,0,0.3)',
     alignItems: 'center',
-    animationIn='fadeIn',
-    animationOut='fadeOut'
+    // animationIn='fadeIn',
+    // animationOut='fadeOut'
   },
   cardStyle: {
     backgroundColor: 'white',
@@ -32,10 +33,13 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     elevation: 10,
-    height: 130,
-    width: 200,
+    height: 100,
+    width: 150,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
+    borderWidth:2,
+    borderColor:colors.blue,
+    overflow:"hidden"
   },
 });

@@ -29,8 +29,7 @@ export default function ResetPasswordScreen({navigation}) {
           // headerContainerStyle={{backgroundColor: 'white'}}
           // iconStyle={{tintColor: colors.blue}}
           title={"Forget Password"}
-        />
-       
+        />      
         <View style={styles.loginContainer}>
           <View style={{width: '100%', padding: 30}}>
             <View style={styles.cardContainer}>
@@ -41,7 +40,7 @@ export default function ResetPasswordScreen({navigation}) {
               <View style={{height: 30}} />
               <CustomButton
                 title={'Change Password'}
-                buttonContainerStyle={{backgroundColor: 'white', height: 45}}
+                buttonContainerStyle={{backgroundColor: 'white'}}
                 buttontitleStyle={{color: colors.blue}}
                 onPress={() => {
                   navigation.dispatch(StackActions.replace('authStack'));

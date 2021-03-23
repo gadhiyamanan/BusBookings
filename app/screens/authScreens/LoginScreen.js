@@ -33,7 +33,7 @@ export default function LoginScreen({navigation}) {
           />
           <Text style={styles.weclcomeFont}>Welcome back!</Text>
 
-          <View style={{width: '100%', padding: 30}}>
+          <View style={{width: '100%', padding: 25}}>
             <View style={styles.cardContainer}>
               <TextInputComponent source={userIcon} placeholder="Enter Email" />
               <View style={{height: 30}} />
@@ -48,7 +48,7 @@ export default function LoginScreen({navigation}) {
                   navigation.navigate('resetPassword');
                 }}
                 style={{paddingLeft: 20}}>
-                <Text style={{color: 'white', fontSize: 15}}>
+                <Text style={{color: 'white', fontSize: 13}}>
                   Forget Password?
                 </Text>
               </TouchableOpacity>

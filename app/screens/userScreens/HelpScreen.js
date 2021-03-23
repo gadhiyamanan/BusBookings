@@ -14,11 +14,11 @@ import colors from '../../constants/colors';
 
 export default function HelpScreen() {
   const __onPhonePress = async () => {
-    console.log('check');
+    
     await Linking.openURL(`tel:${7284974262}`);
   };
   const __onEmailPress = async () => {
-    console.log('check');
+    
     await Linking.openURL(`mailto:${'gadhiyamanan18@gmail.com'}`);
   };
   return (
@@ -26,7 +26,7 @@ export default function HelpScreen() {
       <Header title="Help" />
       <View style={styles.cardContainer}>
         <View style={styles.titleContiner}>
-          <Text style={styles.title}>Bus Travel</Text>
+          <Text style={styles.title}>Bus Bookings</Text>
         </View>
         <View style={styles.space} />
         <View style={{flexDirection: 'row'}}>

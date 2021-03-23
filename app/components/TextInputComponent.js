@@ -27,11 +27,11 @@ export function TextInputComponent({
   const [isHidePassword, setIsHidePassword] = useState(passwordfield);
   return (
     <>
-      <SafeAreaView />
+     
       <View
         style={[
           styles.textInputContainer,
-          {paddingLeft: source ? 0 : 25},
+          {paddingLeft: source ? 0 : 15},
           textInputContainerStyle,
         ]}>
         {source ? (
@@ -70,33 +70,36 @@ export function TextInputComponent({
 
 const styles = StyleSheet.create({
   textInputContainer: {
-    height: 50,
+    height: 45,
     borderWidth: 1,
     borderColor: 'lightgrey',
     alignItems: 'center',
     borderRadius: 25,
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingRight: 20,
+    paddingRight: 15,
+    justifyContent:"center"
+    ,alignItems:"center"
   },
   imageContainer: {
-    height: 50,
-    width: 50,
+    height: 45,
+    width: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    //backgroundColor:"red"
   },
   image: {
-    height: 25,
-    width: 25,
+    height: 18,
+    width: 18,
     resizeMode: 'contain',
     tintColor: 'lightgrey',
   },
-  passwordIcon: {height: 20, width: 20, resizeMode: 'contain'},
+  passwordIcon: {height: 18, width: 18, resizeMode: 'contain'},
   passwordIconContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 10,
   },
-  textInput: {fontSize: 20, flex: 1},
-  line: {width: 1, height: 50, backgroundColor: 'lightgrey'},
+  textInput: {fontSize: 15, flex: 1},
+  line: {width: 1, height: 45, backgroundColor: 'lightgrey'},
 });

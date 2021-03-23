@@ -30,7 +30,7 @@ export function CustomButton({
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: colors.blue,
-    height: 57,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,

@@ -20,7 +20,7 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import {CalenderPicker} from '../../components/Dialog/calenderPickerComponent';
 export default function HomeScreen({navigation}) {
   useEffect(() => {
-    console.log('home Screen');
+    
   }, []);
   const [originCity, setOriginCity] = useState();
   const [destinationCity, setDestinationCity] = useState();
@@ -34,7 +34,7 @@ export default function HomeScreen({navigation}) {
       <CalenderPicker
         isModalVisible={isCalendeShow}
         onDayPress={(day) => {
-          console.log('selected day', day);
+          
           setDate(day.timestamp);
           setIsCalenderShow(false);
         }}

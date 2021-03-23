@@ -99,6 +99,7 @@ export default function SelectBusScreen({navigation}) {
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{marginTop: 10}}
+        ListFooterComponent={<View style={{height:20}}/>}
       />
     </>
   );

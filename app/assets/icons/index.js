@@ -14,7 +14,7 @@ import leftarrowIcon from './leftarrow.png';
 import ratingIcon from './ratingIcon.png';
 import filledRatingIcon from './filledRatingIcon.png';
 import ArrowIcon from './ArrowIcon.png';
-import { editPicture } from "./editPicture.png";
+import  editPictureIcon  from "./editPicture.png";
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -32,5 +32,5 @@ export {
   ratingIcon,
   filledRatingIcon,
   ArrowIcon,
-  editPicture
+  editPictureIcon
 };

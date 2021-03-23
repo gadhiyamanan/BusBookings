@@ -114,14 +114,14 @@ const styles = StyleSheet.create({
   },
   starCarContainer: {
     backgroundColor: colors.white,
-    marginHorizontal: scale(55),
+    marginHorizontal: 60,
     height: verticalScale(60),
     borderRadius: 10,
     justifyContent: 'center',
   },
   cardContainer: {
     backgroundColor: colors.white,
-    marginHorizontal: scale(55),
+    marginHorizontal:60,
     height: verticalScale(450),
     borderRadius: 10,
   },

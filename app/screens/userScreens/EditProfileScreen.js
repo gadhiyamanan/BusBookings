@@ -7,14 +7,21 @@ import {
   Text,
   StatusBar,
   Image,
+  Touchable,
+  TouchableOpacity,
 } from 'react-native';
-import {myAccountIcon} from '../../assets/icons';
+import {editPictureIcon, myAccountIcon} from '../../assets/icons';
 import {CustomButton} from '../../components/Buttoncomponent';
 import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInputComponent} from '../../components/TextInputComponent';
-export default function EditProfileScreen() {
+import {useState} from 'react';
+export default function EditProfileScreen({navigation}) {
+  const [isMale, setIsMale] = useState(true);
+  const __onSavePress=()=>{
+    navigation.navigate("MyAccount")
+  }
   return (
     <>
       <Header title="Edit Profile" isback />
@@ -26,11 +33,14 @@ export default function EditProfileScreen() {
           }}
           showsVerticalScrollIndicator={false}>
           <View style={{height: 200, justifyContent: 'space-evenly'}}>
-            <View style={styles.imageContainerStyle}>
+            <TouchableOpacity style={styles.imageContainerStyle}>
               <View style={[styles.imageSubContainerStyle]}>
                 <Image source={myAccountIcon} style={styles.image} />
               </View>
-            </View>
+              <View style={styles.editImageContainer}>
+                <Image source={editPictureIcon} style={styles.editImage} />
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.descriptionContainer}>
             <TextInputComponent
@@ -44,14 +54,46 @@ export default function EditProfileScreen() {
               keyboardType="phone-pad"
             />
             <View style={styles.space} />
-            <View>
-              
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+              }}>
+              <CustomButton
+                title="Male"
+                buttonContainerStyle={{
+                  flex: 1,
+                  borderRadius: 50,
+                  borderWidth: 1,
+                  borderColor: colors.blue,
+                  backgroundColor: isMale ? colors.blue : colors.white,
+                }}
+                buttontitleStyle={{color: isMale ? colors.white : colors.blue}}
+                onPress={() => setIsMale(!isMale)}
+              />
+              <View style={{width: 10}} />
+              <CustomButton
+                title="Female"
+                buttonContainerStyle={{
+                  flex: 1,
+                  borderRadius: 50,
+                  backgroundColor: isMale ? colors.white : colors.blue,
+                  borderWidth: 1,
+                  borderColor: colors.blue,
+                }}
+                buttontitleStyle={{color: isMale ? colors.blue : colors.white}}
+                onPress={() => setIsMale(!isMale)}
+              />
             </View>
+            <View style={styles.space} />
             <TextInputComponent
               textInputContainerStyle={{borderColor: colors.blue}}
               placeholder="Enter Age"
               keyboardType="number-pad"
             />
+            <View style={styles.space} />
+            <CustomButton title="Save" onPress={__onSavePress}/>
+            <View style={{height: 20}} />
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -108,5 +150,27 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     tintColor: colors.blue,
   },
+  editImage: {
+    height: '100%',
+    width: '100%',
+    tintColor: colors.white,
+    resizeMode: 'contain',
+  },
   nameText: {fontSize: 18, color: colors.blue, fontWeight: 'bold'},
+  editImageContainer: {
+    position: 'absolute',
+    height: 25,
+    width: 25,
+    backgroundColor: colors.blue,
+    bottom: 0,
+    right: 5,
+    borderRadius: 50,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.blue,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.blue,
+  },
 });

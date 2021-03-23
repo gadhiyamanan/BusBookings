@@ -23,71 +23,68 @@ export default function MyAccountScreen({navigation}) {
   return (
     <>
       <Header title="My Account" />
-      <View style={styles.container}>
-        <View style={styles.imageContainerStyle}>
-          <View style={[styles.imageSubContainerStyle]}>
-            <Image source={myAccountIcon} style={styles.image} />
+      <View style={styles.root}>
+        <View style={styles.container}>
+          <View style={styles.imageContainerStyle}>
+            <View style={[styles.imageSubContainerStyle]}>
+              <Image source={myAccountIcon} style={styles.image} />
+            </View>
+          </View>
+          <View style={{height: 10}} />
+          <View style={{alignItems: 'center'}}>
+            <Text>Hello</Text>
+            <Text style={styles.nameText}>Manan Gadhiya</Text>
           </View>
         </View>
+        <View style={{height: 1, backgroundColor: colors.lightgrey}} />
 
-        <View style={{alignItems: 'center'}}>
-          <Text>Hello</Text>
-          <Text style={styles.nameText}>Manan Gadhiya</Text>
+        <View style={styles.descriptionContainer}>
+          <View style={styles.subDescriptionContainer}>
+            <Text style={styles.text}>Email</Text>
+            <Text style={styles.subText}>gadhiyamanan18@gmail.com</Text>
+          </View>
+          <View style={styles.thinline} />
+          <View style={styles.subDescriptionContainer}>
+            <Text style={styles.text}>Contact No.</Text>
+            <Text style={styles.subText}>7284562312</Text>
+          </View>
+          <View style={styles.thinline} />
+          <View style={styles.subDescriptionContainer}>
+            <Text style={styles.text}>Gender</Text>
+            <Text style={styles.subText}>Male</Text>
+          </View>
+          <View style={styles.thinline} />
+          <View style={styles.subDescriptionContainer}>
+            <Text style={styles.text}>Age</Text>
+            <Text style={styles.subText}>23</Text>
+          </View>
+          <View style={styles.thinline} />
+          <View style={{height: 10}} />
+          <CustomButton title="Edit Profile" onPress={__onEditProfilePress} />
+          <View style={{height: 10}} />
+          <CustomButton title="Logout" onPress={__onLogoutPress} />
+          <View style={{height: 10}} />
         </View>
-      </View>
-      <View style={{height: 1, backgroundColor: colors.lightgrey}} />
-
-      <View style={styles.descriptionContainer}>
-        <View style={styles.subDescriptionContainer}>
-          <Text style={styles.text}>Email</Text>
-          <Text style={styles.subText}>gadhiyamanan18@gmail.com</Text>
-        </View>
-        <View style={styles.thinline} />
-        <View style={styles.subDescriptionContainer}>
-          <Text style={styles.text}>Contact No.</Text>
-          <Text style={styles.subText}>7284562312</Text>
-        </View>
-        <View style={styles.thinline} />
-        <View style={styles.subDescriptionContainer}>
-          <Text style={styles.text}>Gender</Text>
-          <Text style={styles.subText}>Male</Text>
-        </View>
-        <View style={styles.thinline} />
-        <View style={styles.subDescriptionContainer}>
-          <Text style={styles.text}>Age</Text>
-          <Text style={styles.subText}>23</Text>
-        </View>
-        <View style={styles.thinline} />
-        <View style={{height: 10}} />
-        <CustomButton
-          title="Edit Profile"
-          buttonContainerStyle={{height: 40}}
-          onPress={__onEditProfilePress}
-        />
-        <View style={{height: 10}} />
-        <CustomButton
-          title="Logout"
-          buttonContainerStyle={{height: 40}}
-          onPress={__onLogoutPress}
-        />
-        <View style={{height: 10}} />
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  root: {
+    justifyContent: "space-evenly",
     backgroundColor: colors.white,
-    justifyContent: 'space-evenly',
+    flex: 1,
+  },
+  container: {
+    height: 200,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  descriptionContainer: {backgroundColor: colors.white, paddingHorizontal: 30},
-  subDescriptionContainer: {
-    backgroundColor: colors.white,
-    flexDirection: 'row',
 
+  descriptionContainer: {paddingHorizontal: 30},
+  subDescriptionContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
   },

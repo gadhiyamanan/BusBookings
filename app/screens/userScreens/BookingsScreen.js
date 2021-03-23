@@ -78,35 +78,32 @@ export default function BookingsScreen({navigation}) {
   };
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => __onTicketPress(item)}>
-        <View style={styles.cardContainer}>
-          <View style={styles.space} />
-          <Text style={styles.title}>{item.title}</Text>
-
-          <View style={styles.space} />
-          <Text style={{opacity: 0.5}}>{item.facility}</Text>
-
-          <View style={styles.descriptionContainer}>
-            <Text>{item.seats.length} seats</Text>
-            <View style={styles.roundView} />
-            <Text>{item.duration}</Text>
-            <View style={styles.roundView} />
-            <Text>{item.stops}</Text>
-          </View>
-          <View style={styles.space} />
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text style={{color: colors.blue}}>
-                {item.from} To {item.to}
-              </Text>
-            </View>
-
-            <View>
-              <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
-            </View>
-          </View>
-          <View style={styles.space} />
+      <TouchableOpacity
+        style={styles.cardContainer}
+        onPress={() => __onTicketPress(item)}>
+        <View style={styles.space} />
+        <Text style={styles.title}>{item.title}</Text>
+        <View style={styles.space} />
+        <Text style={{opacity: 0.5}}>{item.facility}</Text>
+        <View style={styles.descriptionContainer}>
+          <Text>{item.seats.length} seats</Text>
+          <View style={styles.roundView} />
+          <Text>{item.duration}</Text>
+          <View style={styles.roundView} />
+          <Text>{item.stops}</Text>
         </View>
+        <View style={styles.space} />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View>
+            <Text style={{color: colors.blue}}>
+              {item.from} To {item.to}
+            </Text>
+          </View>
+          <View>
+            <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
+          </View>
+        </View>
+        <View style={styles.space} />
       </TouchableOpacity>
     );
   };
@@ -119,7 +116,8 @@ export default function BookingsScreen({navigation}) {
         renderItem={renderItem}
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{marginTop: 10, marginBottom: 20}}
+        contentContainerStyle={{marginTop: 10}}
+        ListFooterComponent={<View style={{height:20}}/>}
       />
     </>
   );
