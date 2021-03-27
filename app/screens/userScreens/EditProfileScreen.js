@@ -19,9 +19,9 @@ import {TextInputComponent} from '../../components/TextInputComponent';
 import {useState} from 'react';
 export default function EditProfileScreen({navigation}) {
   const [isMale, setIsMale] = useState(true);
-  const __onSavePress=()=>{
-    navigation.navigate("MyAccount")
-  }
+  const __onSavePress = () => {
+    navigation.navigate('MyAccount');
+  };
   return (
     <>
       <Header title="Edit Profile" isback />
@@ -69,7 +69,7 @@ export default function EditProfileScreen({navigation}) {
                   backgroundColor: isMale ? colors.blue : colors.white,
                 }}
                 buttontitleStyle={{color: isMale ? colors.white : colors.blue}}
-                onPress={() => setIsMale(!isMale)}
+                onPress={() => setIsMale(true)}
               />
               <View style={{width: 10}} />
               <CustomButton
@@ -82,7 +82,7 @@ export default function EditProfileScreen({navigation}) {
                   borderColor: colors.blue,
                 }}
                 buttontitleStyle={{color: isMale ? colors.blue : colors.white}}
-                onPress={() => setIsMale(!isMale)}
+                onPress={() => setIsMale(false)}
               />
             </View>
             <View style={styles.space} />
@@ -92,7 +92,7 @@ export default function EditProfileScreen({navigation}) {
               keyboardType="number-pad"
             />
             <View style={styles.space} />
-            <CustomButton title="Save" onPress={__onSavePress}/>
+            <CustomButton title="Save" onPress={__onSavePress} />
             <View style={{height: 20}} />
           </View>
         </KeyboardAwareScrollView>

@@ -21,6 +21,7 @@ export default class SelectSeatScreen extends React.Component {
     this.state = {
       bookedSeats: [2, 3, 7, 8, 20, 25, 40],
       selectedSeats: [],
+
       seatmap: [
         1,
         1,
@@ -87,7 +88,6 @@ export default class SelectSeatScreen extends React.Component {
     createNewSeat = [];
     price = 2000;
   }
-
   componentDidMount() {
     let seats = 0;
     this.state.seatmap.map((item, index) => {
