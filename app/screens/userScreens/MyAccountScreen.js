@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: colors.lightgrey,
   },
+ 
   imageContainerStyle: {
     height: 90,
     width: 90,
@@ -103,20 +104,21 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.blue,
   },
+
   imageSubContainerStyle: {
     height: 80,
     width: 80,
     borderRadius: 40,
     borderColor: colors.white,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     overflow: 'hidden',
   },
   image: {
     height: '100%',
     width: '100%',
-    resizeMode: 'contain',
-    tintColor: colors.blue,
+    resizeMode: 'cover',
+    
   },
   nameText: {fontSize: 18, color: colors.blue, fontWeight: 'bold'},
 });

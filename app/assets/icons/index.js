@@ -15,6 +15,8 @@ import ratingIcon from './ratingIcon.png';
 import filledRatingIcon from './filledRatingIcon.png';
 import ArrowIcon from './ArrowIcon.png';
 import  editPictureIcon  from "./editPicture.png";
+import cancelIcon from "./cancel.png";
+import mailIcon from "./mail.png";
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -32,5 +34,7 @@ export {
   ratingIcon,
   filledRatingIcon,
   ArrowIcon,
-  editPictureIcon
+  editPictureIcon,
+  cancelIcon,
+  mailIcon
 };

@@ -21,7 +21,6 @@ export default class SelectSeatScreen extends React.Component {
     this.state = {
       bookedSeats: [2, 3, 7, 8, 20, 25, 40],
       selectedSeats: [],
-
       seatmap: [
         1,
         1,
@@ -85,11 +84,12 @@ export default class SelectSeatScreen extends React.Component {
         1,
       ],
     };
-    createNewSeat = [];
+   // createNewSeat = [];
     price = 2000;
   }
   componentDidMount() {
     let seats = 0;
+    let createNewSeat=[]
     this.state.seatmap.map((item, index) => {
       if (item !== 0) {
         seats += 1;
@@ -103,7 +103,7 @@ export default class SelectSeatScreen extends React.Component {
   __onNextPress = () => {
     this.props.navigation.navigate('reservation', {
       seatInfo: {
-        amount: this.state.selectedSeats.length * price,
+        amount: this.state.selectedSeats.length * this.state.price,
         seats: this.state.selectedSeats,
       },
     });

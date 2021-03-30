@@ -17,6 +17,7 @@ import fonts from '../../constants/fonts';
 
 import {StackActions} from '@react-navigation/native';
 import {Header} from '../../components/Header';
+import { mailIcon } from '../../assets/icons';
 export default function ResetPasswordScreen({navigation}) {
   return (
     <View style={styles.container}>
@@ -26,8 +27,6 @@ export default function ResetPasswordScreen({navigation}) {
 
         <Header
           isback
-          // headerContainerStyle={{backgroundColor: 'white'}}
-          // iconStyle={{tintColor: colors.blue}}
           title={"Forget Password"}
         />      
         <View style={styles.loginContainer}>
@@ -36,6 +35,7 @@ export default function ResetPasswordScreen({navigation}) {
               <TextInputComponent
                 textInputContainerStyle={{paddingHorizontal: 10}}
                 placeholder="Enter Email"
+                source={mailIcon}
               />
               <View style={{height: 30}} />
               <CustomButton

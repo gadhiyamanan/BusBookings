@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -13,7 +12,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../constants/colors';
-import {userIcon, passwordIcon} from '../../assets/icons/index';
+import {userIcon, passwordIcon, mailIcon} from '../../assets/icons/index';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {CustomButton} from '../../components/Buttoncomponent';
 import fonts from '../../constants/fonts';
@@ -35,18 +34,23 @@ export default function LoginScreen({navigation}) {
           <Image source={signuplogo} style={styles.image} />
           <View style={{width: '100%', padding: 25}}>
             <View style={styles.cardContainer}>
-              <TextInputComponent placeholder="Enter Full Name" />
+              <TextInputComponent
+                placeholder="Enter Full Name"
+                source={userIcon}
+              />
               <View style={{height: 10}} />
-              <TextInputComponent placeholder="Enter Email" />
+              <TextInputComponent placeholder="Enter Email" source={mailIcon} />
               <View style={{height: 10}} />
               <TextInputComponent
                 placeholder="Enter Password"
                 passwordfield
+                source={passwordIcon}
               />
               <View style={{height: 10}} />
               <TextInputComponent
                 placeholder="Confirm Password"
                 passwordfield
+                source={passwordIcon}
               />
               <View style={{height: 30}} />
               <CustomButton

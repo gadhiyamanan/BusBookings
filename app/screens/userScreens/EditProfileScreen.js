@@ -10,17 +10,32 @@ import {
   Touchable,
   TouchableOpacity,
 } from 'react-native';
-import {editPictureIcon, myAccountIcon} from '../../assets/icons';
+import {editPictureIcon, myAccountIcon, userIcon} from '../../assets/icons';
 import {CustomButton} from '../../components/Buttoncomponent';
 import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {useState} from 'react';
+import ImagePicker from 'react-native-image-crop-picker';
 export default function EditProfileScreen({navigation}) {
   const [isMale, setIsMale] = useState(true);
+  const [image, setImage] = useState(myAccountIcon);
   const __onSavePress = () => {
     navigation.navigate('MyAccount');
+  };
+  const __changeProfilePic = () => {
+    ImagePicker.openPicker({
+      width: 400,
+      height: 400,
+      cropping: true,
+    })
+      .then((image) => {
+        setImage({uri: image.path});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>
@@ -33,9 +48,11 @@ export default function EditProfileScreen({navigation}) {
           }}
           showsVerticalScrollIndicator={false}>
           <View style={{height: 200, justifyContent: 'space-evenly'}}>
-            <TouchableOpacity style={styles.imageContainerStyle}>
+            <TouchableOpacity
+              style={styles.imageContainerStyle}
+              onPress={__changeProfilePic}>
               <View style={[styles.imageSubContainerStyle]}>
-                <Image source={myAccountIcon} style={styles.image} />
+                <Image source={image} style={styles.image} />
               </View>
               <View style={styles.editImageContainer}>
                 <Image source={editPictureIcon} style={styles.editImage} />
@@ -147,8 +164,8 @@ const styles = StyleSheet.create({
   image: {
     height: '100%',
     width: '100%',
-    resizeMode: 'contain',
-    tintColor: colors.blue,
+    resizeMode: 'cover',
+    //tintColor: colors.blue,
   },
   editImage: {
     height: '100%',

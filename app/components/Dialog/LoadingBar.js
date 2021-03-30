@@ -6,7 +6,7 @@ import { loading } from "../../assets/loadings/index";
 import colors from '../../constants/colors';
 export  function LoadingBar({visible}) {
   return (
-    <Modal visible={visible} style={styles.modalStyle}>
+    <Modal visible={visible} style={styles.modalStyle} useNativeDriver>
       <View style={styles.cardStyle}>
         <LottieView
           source={loading}

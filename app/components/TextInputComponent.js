@@ -25,6 +25,7 @@ export function TextInputComponent({
   ...other
 }) {
   const [isHidePassword, setIsHidePassword] = useState(passwordfield);
+  const BLUE="#428AF8"
   return (
     <>
      
@@ -45,7 +46,7 @@ export function TextInputComponent({
 
         <TextInput
           style={[styles.textInput, textInputStyle]}
-          selectionColor={colors.blue}
+          selectionColor={"rgba(86, 76, 205, 1)"}
           secureTextEntry={isHidePassword}
           {...other}
         />
@@ -92,14 +93,14 @@ const styles = StyleSheet.create({
     height: 18,
     width: 18,
     resizeMode: 'contain',
-    tintColor: 'lightgrey',
+    tintColor: colors.blue,
   },
-  passwordIcon: {height: 18, width: 18, resizeMode: 'contain'},
+  passwordIcon: {height: 18, width: 18, resizeMode: 'contain',tintColor:colors.blue},
   passwordIconContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 10,
   },
   textInput: {fontSize: 15, flex: 1},
-  line: {width: 1, height: 45, backgroundColor: 'lightgrey'},
+  line: {width: 1, height: "100%", backgroundColor: 'lightgrey'},
 });

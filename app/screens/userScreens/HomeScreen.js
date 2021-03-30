@@ -18,10 +18,11 @@ import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import {CustomButton} from '../../components/Buttoncomponent';
 import {CalenderPicker} from '../../components/Dialog/calenderPickerComponent';
+
+import {useFocusEffect} from '@react-navigation/native';
 export default function HomeScreen({navigation}) {
-  useEffect(() => {
-    
-  }, []);
+  useFocusEffect( React.useCallback(() => {}, []));
+
   const [originCity, setOriginCity] = useState();
   const [destinationCity, setDestinationCity] = useState();
   const [isCalendeShow, setIsCalenderShow] = useState(false);
@@ -34,10 +35,10 @@ export default function HomeScreen({navigation}) {
       <CalenderPicker
         isModalVisible={isCalendeShow}
         onDayPress={(day) => {
-          
           setDate(day.timestamp);
           setIsCalenderShow(false);
         }}
+        __onBackPress={() => setIsCalenderShow(false)}
       />
       <Header title="Home" />
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -100,7 +101,7 @@ export default function HomeScreen({navigation}) {
                     sameDay: '[Today]',
                     nextDay: '[Tomorrow]',
                     nextWeek: 'dddd',
-                    sameElse: 'L',
+                    sameElse: 'dddd',
                   })}
                 </Text>
               </View>

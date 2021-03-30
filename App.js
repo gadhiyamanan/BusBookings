@@ -1,114 +1,92 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+ import React, { Component } from 'react';
+ import { Button, StyleSheet, View, AppState } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import RazorpayCheckout from 'react-native-razorpay';
+ 
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+ export default class ButtonBasics extends Component {
+  state = {
+    appState: AppState.currentState
+  };
+  componentDidMount() {
+    AppState.addEventListener("change", this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener("change", this._handleAppStateChange);
+  }
+  _handleAppStateChange = state => {
+    console.log(state);
+    if (state === 'active') {
+      // do this
+     // console.log("active");
+    } else if (state === 'background') {
+      // do that
+     // console.log("back");
+     RazorpayCheckout.onExternalWalletSelection().then((data)=>{
+      console.log(data);
+    })
+    } else if (state === 'inactive') {
+      // do that other thing
+     // console.log("quit");
+    
+    }
+  
+  };
+  _onPressButton() {
+var options = {
+    description: 'Payment for Bus Booking',
+    image: '',
+    currency: 'INR',
+    key: 'rzp_test_RqULCm05ouMaLI',
+    amount: '5000',
+    name: 'Bus Bookings.com',
+    prefill: {
+      email: 'void@razorpay.com',
+      contact: '9191919191',
+      name: 'Razorpay Software'
+    },
+    timeout:10,
+    theme: {color: '#1592E6'}
+  }
+    RazorpayCheckout.open(options).then((data) => {
+    // handle success
+    console.log(data);
+    alert(`Success: ${data}`);
+  }).catch((error) => {
+    // handle failure
+    alert(`Error: ${error.code} | ${error.description}`);
+  });
+
+  }
+
+  render() {
+    return (
+
+      <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+      <Button
+      onPress={this._onPressButton}
+      title="Press Me"
+      />
+      </View>
+      </View>
+      );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  container: {
+   flex: 1,
+   justifyContent: 'center',
+ },
+ buttonContainer: {
+  margin: 20
+},
+alternativeLayoutButtonContainer: {
+  margin: 20,
+  flexDirection: 'row',
+  justifyContent: 'space-between'
+}
 });
-
-export default App;

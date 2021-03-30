@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../constants/colors';
-import {userIcon, passwordIcon} from '../../assets/icons/index';
+import {userIcon, passwordIcon, mailIcon} from '../../assets/icons/index';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {CustomButton} from '../../components/Buttoncomponent';
 import fonts from '../../constants/fonts';
@@ -27,15 +27,12 @@ export default function LoginScreen({navigation}) {
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
         showsVerticalScrollIndicator={false}>
         <View style={styles.loginContainer}>
-          <Image
-            source={logo}
-            style={styles.image}
-          />
+          <Image source={logo} style={styles.image} />
           <Text style={styles.weclcomeFont}>Welcome back!</Text>
 
           <View style={{width: '100%', padding: 25}}>
             <View style={styles.cardContainer}>
-              <TextInputComponent source={userIcon} placeholder="Enter Email" />
+              <TextInputComponent source={mailIcon} placeholder="Enter Email" />
               <View style={{height: 30}} />
               <TextInputComponent
                 source={passwordIcon}
@@ -115,5 +112,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     paddingBottom: 10,
   },
-  image:{height: 120, width: 120, resizeMode: 'contain'}
+  image: {height: 120, width: 120, resizeMode: 'contain'},
 });
