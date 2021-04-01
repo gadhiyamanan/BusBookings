@@ -32,7 +32,7 @@ export default function LoginScreen({navigation}) {
 
           <View style={{width: '100%', padding: 25}}>
             <View style={styles.cardContainer}>
-              <TextInputComponent source={mailIcon} placeholder="Enter Email" />
+              <TextInputComponent source={mailIcon} placeholder="Enter Email" keyboardType="email-address"/>
               <View style={{height: 30}} />
               <TextInputComponent
                 source={passwordIcon}

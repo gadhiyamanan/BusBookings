@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 export default function Index() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="authStack" >
+      <Stack.Navigator initialRouteName="daskBoardStack" >
       <Stack.Screen name="splashScreen" component={SplashScreen} options= {{headerShown: false}}/>
         <Stack.Screen name="authStack" component={AuthStack} options= {{headerShown: false}}/>
         <Stack.Screen name="daskBoardStack" component={DashBoardStack} options= {{headerShown: false}}/>

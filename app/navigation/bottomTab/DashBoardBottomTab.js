@@ -43,14 +43,3 @@ export default function DashBoardBottomTab() {
   );
 }
 
-function bottomHomScreen() {
-  return (
-    <Stack.Navigator >
-      <Stack.Screen
-        name="home"
-        component={HomeScreen}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
-}

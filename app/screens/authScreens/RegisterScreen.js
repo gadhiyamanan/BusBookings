@@ -26,9 +26,11 @@ export default function LoginScreen({navigation}) {
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
         showsVerticalScrollIndicator={false}>
         <Header
+        title="Sign Up"
           isback
           headerContainerStyle={{backgroundColor: 'white'}}
           iconStyle={{tintColor: colors.blue}}
+        
         />
         <View style={styles.loginContainer}>
           <Image source={signuplogo} style={styles.image} />
@@ -39,9 +41,10 @@ export default function LoginScreen({navigation}) {
                 source={userIcon}
               />
               <View style={{height: 10}} />
-              <TextInputComponent placeholder="Enter Email" source={mailIcon} />
+              <TextInputComponent placeholder="Enter Email" source={mailIcon} keyboardType="email-address" />
               <View style={{height: 10}} />
               <TextInputComponent
+              
                 placeholder="Enter Password"
                 passwordfield
                 source={passwordIcon}

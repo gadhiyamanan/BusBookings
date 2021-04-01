@@ -8,6 +8,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
+import RazorpayCheckout from 'react-native-razorpay';
 import {Header} from '../../components/Header';
 import moment from 'moment';
 import {ArrowIcon, userIcon} from '../../assets/icons';
@@ -16,7 +17,32 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import QRCode from 'react-native-qrcode-svg';
 export default function ReservationScreen({navigation, route}) {
   const {seatInfo} = route.params;
-  
+  console.log(seatInfo);
+  const __bookTicket=()=>{
+    var options = {
+      description: 'Payment for Bus Booking',
+      image: '',
+      currency: 'INR',
+      key: 'rzp_test_RqULCm05ouMaLI',
+      amount: seatInfo.amount*100,
+      name: 'Bus Bookings.com',
+      prefill: {
+        email: 'void@razorpay.com',
+        contact: '9191919191',
+        name: 'Razorpay Software'
+      },
+     // timeout:10,
+      theme: {color: '#1592E6'}
+    }
+      RazorpayCheckout.open(options).then((data) => {
+      // handle success
+      console.log(data);
+      alert(`Success: ${data}`);
+    }).catch((error) => {
+      // handle failure
+      alert(`Error: ${error.code} | ${error.description}`);
+    });
+  }
 
   return (
     <>
@@ -93,6 +119,7 @@ export default function ReservationScreen({navigation, route}) {
         <CustomButton
           title="Book"
           buttonContainerStyle={{flex: 1, height: 50}}
+          onPress={__bookTicket}
         />
       </View>
       <SafeAreaView style={{marginBottom: 10}} />

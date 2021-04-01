@@ -17,6 +17,8 @@ import ArrowIcon from './ArrowIcon.png';
 import  editPictureIcon  from "./editPicture.png";
 import cancelIcon from "./cancel.png";
 import mailIcon from "./mail.png";
+import busIcon from "./bus.png";
+import routeIcon from "./route.png";
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -36,5 +38,7 @@ export {
   ArrowIcon,
   editPictureIcon,
   cancelIcon,
-  mailIcon
+  mailIcon,
+  busIcon,
+  routeIcon
 };

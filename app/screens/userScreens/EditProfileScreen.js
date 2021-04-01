@@ -18,6 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 export default function EditProfileScreen({navigation}) {
   const [isMale, setIsMale] = useState(true);
   const [image, setImage] = useState(myAccountIcon);

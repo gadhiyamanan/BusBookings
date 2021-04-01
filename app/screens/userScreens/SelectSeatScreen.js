@@ -103,7 +103,7 @@ export default class SelectSeatScreen extends React.Component {
   __onNextPress = () => {
     this.props.navigation.navigate('reservation', {
       seatInfo: {
-        amount: this.state.selectedSeats.length * this.state.price,
+        amount: this.state.selectedSeats.length * price,
         seats: this.state.selectedSeats,
       },
     });
