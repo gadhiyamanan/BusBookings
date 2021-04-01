@@ -25,71 +25,91 @@ export default class SelectSeatScreen extends React.Component {
         1,
         1,
         0,
-        1,
-        1,
-        1,
-        1,
-        1,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
         0,
         1,
         1,
         1,
         1,
         1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
         1,
         1,
         1,
         1,
       ],
     };
-   // createNewSeat = [];
+    // createNewSeat = [];
     price = 2000;
   }
   componentDidMount() {
     let seats = 0;
-    let createNewSeat=[]
+    let createNewSeat = [];
     this.state.seatmap.map((item, index) => {
       if (item !== 0) {
         seats += 1;
@@ -133,15 +153,16 @@ export default class SelectSeatScreen extends React.Component {
     );
 
     return item.pattern !== 0 ? (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.seatConatiner}>
         <SeatComponent
           seatStatus={booked.length !== 0 ? 1 : selected.length !== 0 ? 2 : 0}
           seatNumber={item.seatno}
           onPress={() => this.__onSeatSelect(item.seatno)}
+          seatContainerStyle={{width: '100%'}}
         />
       </View>
     ) : (
-      <View style={{flex: 1}} />
+      <View style={{flex:1}} />
     );
   };
   render() {
@@ -164,21 +185,34 @@ export default class SelectSeatScreen extends React.Component {
           </View>
         </View>
         <View style={{height: 10}} />
+        <View style={styles.upDownContainer}>
+          <View style={[styles.down, {flex: 1}]}>
+            <Text style={styles.upDownText}>Down</Text>
+          </View>
+          <View style={[styles.up, {flex: 1}]}>
+            <Text style={[styles.upDownText]}>Up</Text>
+          </View>
+          <View style={{flex: 2}} />
+          <View style={[styles.down, {flex: 2}]}>
+            <Text style={styles.upDownText}>Down</Text>
+          </View>
+          <View style={[styles.up, {flex: 2}]}>
+            <Text style={styles.upDownText}>Up</Text>
+          </View>
+        </View>
         <View style={styles.cardContainer}>
           <FlatList
             data={this.state.seatmap}
             renderItem={this.renderItem}
             keyExtractor={(__, index) => String(index)}
-            contentContainerStyle={{
-              flexGrow: 1,
-              justifyContent: 'space-between',
-              padding: 15,
-            }}
+            contentContainerStyle={styles.flatlistContainer}
             showsVerticalScrollIndicator={false}
-            numColumns={6}
+            numColumns={8}
+            directionalLockEnabled={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
           />
         </View>
+        <View style={{height:5}}/>
         <View style={[styles.seatDescriptionConatiner]}>
           <View style={styles.alignCenter}>
             <Text style={styles.titleText}>Ticket Rate</Text>
@@ -236,7 +270,7 @@ const styles = StyleSheet.create({
     //flexDirection: 'row',
     borderRadius: 13,
     marginHorizontal: 25,
-    marginVertical: 10,
+    //marginVertical: 10,
     shadowColor: '#000',
 
     shadowOffset: {
@@ -252,5 +286,24 @@ const styles = StyleSheet.create({
   card: {
     height: '100%',
     width: '40%',
+  },
+  upDownContainer: {marginHorizontal: 43, flexDirection: 'row'},
+  flatlistContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    padding: 15,
+    width: '100%',
+  },
+  up: {alignItems: 'center'},
+  down: {
+    alignItems: 'center',
+    
+  },
+  upDownText: {fontSize: 12, color: colors.black,fontWeight:"bold"},
+  seatConatiner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 3,
   },
 });

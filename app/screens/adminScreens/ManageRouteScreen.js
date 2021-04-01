@@ -8,7 +8,7 @@ import {
     StatusBar,
   } from 'react-native';
 
-export default function AddRouteScreen() {
+export default function ManageRouteScreen() {
   return (
    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
        <Text>Add Route Screen</Text>

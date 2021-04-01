@@ -16,8 +16,8 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 
 export function SeatComponent({seatStatus,seatNumber,seatContainerStyle,...other}) {
   let bgcolor=""
-  if(seatStatus===0)bgcolor="#4CBB17" //available seat status 
-  if(seatStatus===1)bgcolor="#707070" //booked seat status 
+  if(seatStatus===0)bgcolor=colors.green //available seat status 
+  if(seatStatus===1)bgcolor=colors.darkgery//booked seat status 
   if(seatStatus===2)bgcolor=colors.blue //selected seat status 
   return (
     <TouchableOpacity

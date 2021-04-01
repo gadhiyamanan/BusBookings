@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeScreen from '../../screens//adminScreens/HomeScreen';
-import AddBusScreen from '../../screens/adminScreens/AddBusScreen';
-import AddRouteScreen from '../../screens/adminScreens/AddRouteScreen';
+import AddBusScreen from '../../screens/adminScreens/ManageBusScreen';
+import AddRouteScreen from '../../screens/adminScreens/ManageRouteScreen';
 import CustomBottomTab from './CustomBottomTab';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
