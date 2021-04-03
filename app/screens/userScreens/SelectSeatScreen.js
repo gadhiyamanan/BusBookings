@@ -25,79 +25,59 @@ export default class SelectSeatScreen extends React.Component {
         1,
         1,
         0,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        0,
-        1,
         1,
         1,
         1,
         1,
         1,
         0,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        0,
-        1,
         1,
         1,
         1,
         1,
         1,
         0,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        0,
-        1,
         1,
         1,
         1,
         1,
         1,
         0,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        0,
-        1,
         1,
         1,
         1,
         1,
         1,
         0,
+        1,
+        1,
+        1,
+        1,
+        1,
         0,
         1,
         1,
         1,
         1,
         1,
+        0,
+        1,
+        1,
+        1,
+        1,
         1,
         0,
+        1,
+        1,
+        1,
+        1,
+        1,
         0,
+        1,
+        1,
+        1,
+        1,
+        1,
         1,
         1,
         1,
@@ -162,7 +142,7 @@ export default class SelectSeatScreen extends React.Component {
         />
       </View>
     ) : (
-      <View style={{flex:1}} />
+      <View style={{flex: 1}} />
     );
   };
   render() {
@@ -207,12 +187,12 @@ export default class SelectSeatScreen extends React.Component {
             keyExtractor={(__, index) => String(index)}
             contentContainerStyle={styles.flatlistContainer}
             showsVerticalScrollIndicator={false}
-            numColumns={8}
+            numColumns={6}
             directionalLockEnabled={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
           />
         </View>
-        <View style={{height:5}}/>
+        <View style={{height: 5}} />
         <View style={[styles.seatDescriptionConatiner]}>
           <View style={styles.alignCenter}>
             <Text style={styles.titleText}>Ticket Rate</Text>
@@ -297,9 +277,8 @@ const styles = StyleSheet.create({
   up: {alignItems: 'center'},
   down: {
     alignItems: 'center',
-    
   },
-  upDownText: {fontSize: 12, color: colors.black,fontWeight:"bold"},
+  upDownText: {fontSize: 12, color: colors.black, fontWeight: 'bold'},
   seatConatiner: {
     flex: 1,
     justifyContent: 'center',

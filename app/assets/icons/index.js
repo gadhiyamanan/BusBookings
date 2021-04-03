@@ -19,6 +19,7 @@ import cancelIcon from "./cancel.png";
 import mailIcon from "./mail.png";
 import busIcon from "./bus.png";
 import routeIcon from "./route.png";
+import plusIcon from "./plus.png";
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -40,5 +41,6 @@ export {
   cancelIcon,
   mailIcon,
   busIcon,
-  routeIcon
+  routeIcon,
+  plusIcon
 };

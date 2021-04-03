@@ -1,7 +1,6 @@
 import React from 'react';
 import HomeScreen from '../../screens//adminScreens/HomeScreen';
-import AddBusScreen from '../../screens/adminScreens/ManageBusScreen';
-import AddRouteScreen from '../../screens/adminScreens/ManageRouteScreen';
+import ManageRoute from '../../screens/adminScreens/ManageRouteScreen';
 import CustomBottomTab from './CustomBottomTab';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -13,6 +12,7 @@ import {
   routeIcon,
 } from '../../assets/icons';
 import {createStackNavigator} from '@react-navigation/stack';
+import ManageBusScreen from '../../screens/adminScreens/ManageBusScreen';
 const Tab = createBottomTabNavigator();
 export default function AdminBottomTab() {
   return (
@@ -25,14 +25,14 @@ export default function AdminBottomTab() {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="addBus"
+        name="manageBus"
         options={{title: 'Manage Bus', icon: busIcon}}
-        component={AddBusScreen}
+        component={ManageBusScreen}
       />
       <Tab.Screen
-        name="addRoute"
+        name="manageRoute"
         options={{title: 'Manage Route', icon: routeIcon}}
-        component={AddRouteScreen}
+        component={ManageRoute}
       />
     </Tab.Navigator>
   );

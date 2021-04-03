@@ -8,26 +8,26 @@ import {
   StatusBar,
 } from 'react-native';
 import {CustomButton} from '../../components/Buttoncomponent';
-import { Header } from '../../components/Header';
+import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 
 export default function ManageBusScreen({navigation}) {
-  const __addNewBusPress=()=>{
-    navigation.navigate("addEditBus",{title:"Add New Bus",mode:"add"})
-  }
-  const __editBusPress=()=>{
-    navigation.navigate("addEditBus",{title:"Edit Bus Details",mode:"edit"})
-  }
+  const __addNewBusPress = () => {
+    navigation.navigate('addEditBus', {title: 'Add New Bus', mode: 'add'});
+  };
+  const __editBusPress = () => {
+    navigation.navigate('editBusList');
+  };
   return (
     <>
-    <Header title="Manage Bus"/>
-    <View style={styles.root}>
-      <View style={styles.buttonContainer}>
-        <CustomButton title="Add New Bus" onPress={__addNewBusPress} />
-        <View style={{height: 10}} />
-        <CustomButton title="Edit Bus Details" onPress={__editBusPress}/>
+      <Header title="Manage Bus" />
+      <View style={styles.root}>
+        <View style={styles.buttonContainer}>
+          <CustomButton title="Add New Bus" onPress={__addNewBusPress} />
+          <View style={{height: 10}} />
+          <CustomButton title="Edit Bus Details" onPress={__editBusPress} />
+        </View>
       </View>
-    </View>
     </>
   );
 }
