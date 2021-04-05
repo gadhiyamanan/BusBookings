@@ -9,7 +9,7 @@ import {cancelIcon} from '../../assets/icons';
 export function CalenderPicker({isModalVisible, __onBackPress, ...other}) {
   return (
     <Modal
-      visible={isModalVisible}
+    isVisible={isModalVisible}
       style={styles.modalStyle}
       animationIn="fadeIn"
       animationOut="fadeOut"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,9 +13,15 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import {StackActions} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import { useSelector } from 'react-redux';
 export default function MyAccountScreen({navigation}) {
+  let user=useSelector(({user})=>user.userData)
+
   const __onLogoutPress = () => {
-    navigation.dispatch(StackActions.replace('authStack'));
+    auth()
+      .signOut()
+      .then(() => navigation.dispatch(StackActions.replace('authStack')));
   };
   const __onEditProfilePress = () => {
     navigation.navigate('editProfile');
@@ -27,13 +33,13 @@ export default function MyAccountScreen({navigation}) {
         <View style={styles.container}>
           <View style={styles.imageContainerStyle}>
             <View style={[styles.imageSubContainerStyle]}>
-              <Image source={myAccountIcon} style={styles.image} />
+              <Image source={user.profilePic?{uri:user.profilePic}:myAccountIcon} style={styles.image} />
             </View>
           </View>
           <View style={{height: 10}} />
           <View style={{alignItems: 'center'}}>
             <Text>Hello</Text>
-            <Text style={styles.nameText}>Manan Gadhiya</Text>
+            <Text style={styles.nameText}>{user.name}</Text>
           </View>
         </View>
         <View style={{height: 1, backgroundColor: colors.lightgrey}} />
@@ -41,22 +47,22 @@ export default function MyAccountScreen({navigation}) {
         <View style={styles.descriptionContainer}>
           <View style={styles.subDescriptionContainer}>
             <Text style={styles.text}>Email</Text>
-            <Text style={styles.subText}>gadhiyamanan18@gmail.com</Text>
+            <Text style={styles.subText}>{user.email}</Text>
           </View>
           <View style={styles.thinline} />
           <View style={styles.subDescriptionContainer}>
             <Text style={styles.text}>Contact No.</Text>
-            <Text style={styles.subText}>7284562312</Text>
+            <Text style={styles.subText}>{user.contactNo?user.contactNo:"-"}</Text>
           </View>
           <View style={styles.thinline} />
           <View style={styles.subDescriptionContainer}>
             <Text style={styles.text}>Gender</Text>
-            <Text style={styles.subText}>Male</Text>
+            <Text style={styles.subText}>{user.gender?user.gender:"-"}</Text>
           </View>
           <View style={styles.thinline} />
           <View style={styles.subDescriptionContainer}>
             <Text style={styles.text}>Age</Text>
-            <Text style={styles.subText}>23</Text>
+            <Text style={styles.subText}>{user.age?user.age:"-"}</Text>
           </View>
           <View style={styles.thinline} />
           <View style={{height: 10}} />
@@ -72,7 +78,7 @@ export default function MyAccountScreen({navigation}) {
 
 const styles = StyleSheet.create({
   root: {
-    justifyContent: "space-evenly",
+    justifyContent: 'space-evenly',
     backgroundColor: colors.white,
     flex: 1,
   },
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: colors.lightgrey,
   },
- 
+
   imageContainerStyle: {
     height: 90,
     width: 90,
@@ -118,7 +124,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     resizeMode: 'cover',
-    
   },
   nameText: {fontSize: 18, color: colors.blue, fontWeight: 'bold'},
 });

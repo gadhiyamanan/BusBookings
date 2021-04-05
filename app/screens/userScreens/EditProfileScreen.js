@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -18,11 +18,56 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import auth from '@react-native-firebase/auth';
+import {useDispatch, useSelector} from 'react-redux';
+import SET_USER from '../../actions/type';
+import Database from '../../functions/Database';
+import storage from '@react-native-firebase/storage';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 export default function EditProfileScreen({navigation}) {
-  const [isMale, setIsMale] = useState(true);
+  const dispatch = useDispatch();
+  const [isMale, setIsMale] = useState('');
   const [image, setImage] = useState(myAccountIcon);
-  const __onSavePress = () => {
+  const [name, setName] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [age, setAge] = useState('');
+  const [imagePath, setImagePath] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  let user = useSelector(({user}) => user.userData);
+
+  useEffect(() => {
+    _setData();
+  }, []);
+  const _setData = () => {
+    setName(user.name);
+    setContactNo(user.contactNo);
+    setAge(user.age);
+    setIsMale(user.gender === 'female' ? false : true);
+    setImage(user.profilePic ? {uri: user.profilePic} : myAccountIcon);
+  };
+  const __onSavePress = async () => {
+    setIsLoading(true);
+    let newData = {...user};
+    newData.age = age;
+    newData.name = name;
+    newData.contactNo = contactNo;
+    newData.gender = isMale ? 'male' : 'female';
+
+    if (imagePath) {
+      await storage()
+        .ref(`profilePic/${auth().currentUser.uid}.png`)
+        .putFile(imagePath);
+      const url = await storage()
+        .ref(`profilePic/${auth().currentUser.uid}.png`)
+        .getDownloadURL();
+      newData.profilePic = url;
+    }
+    dispatch({
+      type: 'SET_USER',
+      payload: newData,
+    });
+
+    Database.databaseWrite(`user/${auth().currentUser.uid}`, newData);
     navigation.navigate('MyAccount');
   };
   const __changeProfilePic = () => {
@@ -33,14 +78,17 @@ export default function EditProfileScreen({navigation}) {
     })
       .then((image) => {
         setImage({uri: image.path});
+        setImagePath(image.path);
       })
       .catch((error) => {
         console.log(error);
       });
+    setIsLoading(false);
   };
   return (
     <>
       <Header title="Edit Profile" isback />
+      <LoadingBar visible={isLoading} />
       <View style={styles.container}>
         <KeyboardAwareScrollView
           contentContainerStyle={{
@@ -64,12 +112,16 @@ export default function EditProfileScreen({navigation}) {
             <TextInputComponent
               textInputContainerStyle={{borderColor: colors.blue}}
               placeholder="Enter Name"
+              value={name}
+              onChangeText={(text) => setName(text)}
             />
             <View style={styles.space} />
             <TextInputComponent
               textInputContainerStyle={{borderColor: colors.blue}}
               placeholder="Enter Contact No."
               keyboardType="phone-pad"
+              value={contactNo}
+              onChangeText={(text) => setContactNo(text)}
             />
             <View style={styles.space} />
             <View
@@ -108,6 +160,8 @@ export default function EditProfileScreen({navigation}) {
               textInputContainerStyle={{borderColor: colors.blue}}
               placeholder="Enter Age"
               keyboardType="number-pad"
+              value={age}
+              onChangeText={(text) => setAge(text)}
             />
             <View style={styles.space} />
             <CustomButton title="Save" onPress={__onSavePress} />
