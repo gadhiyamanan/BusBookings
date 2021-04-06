@@ -6,7 +6,6 @@ import {RatingBar} from '../../components/RatingBar';
 
 const DATA = [
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -22,7 +21,6 @@ const DATA = [
     transactionId: '13354HVHH231123',
   },
   {
-    title: 'DEF Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -39,7 +37,6 @@ const DATA = [
   },
 
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -55,7 +52,6 @@ const DATA = [
     transactionId: '13354HVHH231123',
   },
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -82,7 +78,7 @@ export default function BookingsScreen({navigation}) {
         style={styles.cardContainer}
         onPress={() => __onTicketPress(item)}>
         <View style={styles.space} />
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>S G Travels</Text>
         <View style={styles.space} />
         <Text style={{opacity: 0.5}}>{item.facility}</Text>
         <View style={styles.descriptionContainer}>
@@ -117,7 +113,7 @@ export default function BookingsScreen({navigation}) {
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{marginTop: 10}}
-        ListFooterComponent={<View style={{height:20}}/>}
+        ListFooterComponent={<View style={{height: 20}} />}
       />
     </>
   );

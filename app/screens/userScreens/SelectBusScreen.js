@@ -14,7 +14,6 @@ import {RatingBar} from '../../components/RatingBar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 const DATA = [
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -23,7 +22,6 @@ const DATA = [
     price: 2000,
   },
   {
-    title: 'DEF Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -33,7 +31,6 @@ const DATA = [
   },
 
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -42,7 +39,6 @@ const DATA = [
     price: 3000,
   },
   {
-    title: 'ABC Transport',
     facility: 'AC&FAN | Wifi | Sleeper',
     seats: '4 seats',
     duration: '1:45hrs',
@@ -62,7 +58,7 @@ export default function SelectBusScreen({navigation}) {
         style={styles.cardContainer}
         onPress={() => __onBusPress()}>
         <View style={styles.titleContiner}>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title}>S G Travels</Text>
         </View>
         <View style={styles.facilityContiner}>
           <Text style={{opacity: 0.5}}>{item.facility}</Text>
@@ -92,14 +88,14 @@ export default function SelectBusScreen({navigation}) {
 
   return (
     <>
-      <Header title="Select Bus" isback/>
+      <Header title="Select Bus" isback />
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{marginTop: 10}}
-        ListFooterComponent={<View style={{height:20}}/>}
+        ListFooterComponent={<View style={{height: 20}} />}
       />
     </>
   );

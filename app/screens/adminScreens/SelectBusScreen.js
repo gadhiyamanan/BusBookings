@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {
   SafeAreaView,
@@ -15,48 +15,51 @@ import {
 } from 'react-native';
 import {leftarrowIcon} from '../../assets/icons';
 import {logo} from '../../assets/Images';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 import colors from '../../constants/colors';
-const DATA = [
-  'Ahmedabad',
-  'Amreli district',
-  'Anand',
-  'Banaskantha',
-  'Bharuch',
-  'Bhavnagar',
-  'Dahod',
-  'The Dangs',
-  'Gandhinagar',
-  'Jamnagar',
-  'Junagadh',
-  'Kutch',
-  'Kheda',
-  'Mehsana',
-  'Narmada',
-  'Navsari',
-  'Patan',
-  'Panchmahal',
-  'Porbandar',
-  'Rajkot',
-  'Sabarkantha',
-  'Surendranagar',
-  'Surat',
-  'Vyara',
-  'Vadodara',
-  'Valsad',
-];
-export default function SelectPlaceScreen({navigation,route}) {
-  const [placeName, setpalceName] = useState();
-  const [data, setdata] = useState(DATA);
-  
-  const { title,setCity } = route.params;
-  
+import Database from '../../functions/Database';
+export default function SelectBusScreen({navigation, route}) {
+  const {title, setBus} = route.params;
+  const [busno, SetBusNo] = useState([]);
+  const [data, setData] = useState();
+  const [searchbus, setSearchBus] = useState();
+  const [isLoading, setIsloading] = useState(false);
+  useEffect(() => {
+    _getData();
+  }, []);
+  const _getData = async () => {
+    setIsloading(true);
+    let res = await Database.dataBaseRead(`bus`);
+    let busNo = [];
+    res.forEach((element) => {
+      busNo.push(element.val().busNo);
+    });
+    SetBusNo(busNo);
+    setData(busNo);
+    setIsloading(false);
+  };
+  const __onBusPress = (item) => {
+    SetBusNo(item);
+    setBus(item);
+    navigation.navigate('home');
+  };
+
+  function _changeText(text) {
+    let textLowerCase = text.toLowerCase();
+    let trucks = data;
+    let filteredName = trucks.filter((item) => {
+      return item.toLowerCase().match(textLowerCase);
+    });
+    SetBusNo(filteredName);
+    setSearchBus(text);
+  }
   const renderItem = ({item}) => {
     return (
       <>
         <TouchableOpacity
           style={styles.cityNameContainer}
           onPress={() => {
-            __onCityPress(item);
+            __onBusPress(item);
           }}>
           <Text>{item}</Text>
         </TouchableOpacity>
@@ -64,32 +67,15 @@ export default function SelectPlaceScreen({navigation,route}) {
       </>
     );
   };
-
-
-  function _changeText(text) {
-    let textLowerCase = text.toLowerCase();
-    let trucks = DATA;
-    let filteredName = trucks.filter((item) => {
-      return item.toLowerCase().match(textLowerCase);
-    });
-    setdata(filteredName);
-    setpalceName(text);
-  }
-
-  function __onCityPress(item) {
-    setpalceName(item);
-    setCity(item);
-    navigation.navigate("home")
-  }
   return (
     <>
       <SafeAreaView backgroundColor={colors.blue} />
+      <LoadingBar visible={isLoading} />
       <View style={styles.inputContainar}>
         <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => {
-         
-            navigation.navigate("home")
+            navigation.navigate('home');
           }}>
           <Image source={leftarrowIcon} style={styles.image} />
         </TouchableOpacity>
@@ -97,7 +83,7 @@ export default function SelectPlaceScreen({navigation,route}) {
           <TextInput
             placeholder={title}
             style={styles.textInput}
-            value={placeName}
+            value={searchbus}
             onChangeText={(text) => {
               _changeText(text);
             }}
@@ -105,7 +91,7 @@ export default function SelectPlaceScreen({navigation,route}) {
         </View>
       </View>
       <FlatList
-        data={data}
+        data={busno}
         renderItem={renderItem}
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}

@@ -13,7 +13,7 @@ export function CalenderPicker({isModalVisible, __onBackPress, ...other}) {
       style={styles.modalStyle}
       animationIn="fadeIn"
       animationOut="fadeOut"
-      useNativeDriver
+      useNativeDriver={true}
       onBackButtonPress={__onBackPress}
       onBackdropPress={__onBackPress}>
       <View style={{marginHorizontal:20,marginBottom:3}} >

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {
   SafeAreaView,
@@ -14,22 +14,58 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {busIcon} from '../../assets/icons';
 import {CustomButton} from '../../components/Buttoncomponent';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 import {Header} from '../../components/Header';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import colors from '../../constants/colors';
+import Database from '../../functions/Database';
 
 export default function AddEditBusScreen({naviagtion, route}) {
-  const {mode, title,editBusNo} = route.params;
-  
-  const [busNo, setBusNo] = useState('dddddddddd');
+  const {mode, title, editBusNo} = route.params;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [busNo, setBusNo] = useState('');
   const [isAc, setIsAC] = useState(true);
   const [isWifi, setIsWifi] = useState(true);
   const [isTv, setIsTv] = useState(true);
   const [isSleeper, setIsSleeper] = useState(true);
-  const [seats, setSeats] = useState('50');
+  const [seats, setSeats] = useState('');
 
-  const __onSave = () => {
-    if (busNo.length !== 10) {
+  useEffect(() => {
+    _getdata();
+  }, []);
+  const _getdata = async () => {
+    setIsLoading(true);
+    if (mode === 'edit') {
+      let ref = `bus/${editBusNo}`;
+      let resBus = await Database.dataBaseRead(ref);
+
+      let facilitiyArray = resBus.val().facilities.toString().split(',');
+      let a = [];
+      for (let index = 0; index < facilitiyArray.length; index++) {
+        a.push(facilitiyArray[index]);
+      }
+      let seatmapArray = resBus.val().seatMap.toString().split(',');
+      let seats = 0;
+      seatmapArray.forEach((element) => {
+        if (element === '1') {
+          seats = seats + 1;
+        }
+      });
+
+      setSeats(seats.toString());
+      setBusNo(editBusNo);
+      setIsAC(a[0] === 'Ac' ? true : false);
+      setIsWifi(a[1] === 'Wifi' ? true : false);
+      setIsTv(a[2] === 'Tv' ? true : false);
+      setIsSleeper(a[3] === 'Sleeper' ? true : false);
+    }
+    setIsLoading(false);
+  };
+  const __onSave = async () => {
+    setIsLoading(true);
+    let reg = /^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$/;
+    if (!reg.test(busNo)) {
       ToastAndroid.show('Enter Proper Bus Number', ToastAndroid.SHORT);
     } else if (
       seats.length === 0 ||
@@ -69,16 +105,40 @@ export default function AddEditBusScreen({naviagtion, route}) {
           }
         }
       }
+      let facility = [
+        isAc ? 'Ac' : 'Non-Ac',
+        isWifi ? 'Wifi' : 'NoWifi',
+        isTv ? 'Tv' : 'NoTv',
+        isSleeper ? 'Sleeper' : 'Seater',
+      ];
+      let ref = `bus/${busNo}`;
+      let value = {
+        busNo: busNo.toUpperCase(),
+        facilities: facility.toString(),
+        seatMap: seatMap.toString(),
+      };
 
+      let resbus = await Database.dataBaseRead(ref);
 
+      if (resbus.val() && mode === 'add') {
+        console.log('first');
+        ToastAndroid.show('Bus Already Added', ToastAndroid.SHORT);
+      } else {
+        console.log('second');
+        let res = await Database.databaseWrite(ref, value);
+        ToastAndroid.show(
+          `Bus Details ${mode} Sucessfully`,
+          ToastAndroid.SHORT,
+        );
+      }
     }
-    
+    setIsLoading(false);
   };
 
   return (
     <>
       <Header title={title} isback />
-
+      <LoadingBar visible={isLoading} />
       <KeyboardAwareScrollView
         contentContainerStyle={styles.root}
         showsVerticalScrollIndicator={false}>
@@ -202,7 +262,7 @@ export default function AddEditBusScreen({naviagtion, route}) {
         </View>
         <View style={styles.space} />
         <View style={styles.space} />
-        <CustomButton title="ADD BUS" onPress={__onSave} />
+        <CustomButton title={`${mode.toUpperCase()} BUS`} onPress={__onSave} />
         <View style={styles.space} />
         <View style={styles.space} />
       </KeyboardAwareScrollView>

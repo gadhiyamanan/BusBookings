@@ -6,16 +6,15 @@ class Database {
       .ref(ref)
       .once('value')
       .then((snapshot) => {
-       
-        return snapshot.val();
+        return snapshot
       })
       .catch((e) => {
         return false;
       });
   }
 
- async databaseWrite(ref, value) {
-    return  await database()
+  async databaseWrite(ref, value) {
+    return await database()
       .ref(ref)
       .set(value)
       .then(() => {
@@ -25,6 +24,23 @@ class Database {
         return false;
       });
   }
+  async databaseDelete(ref) {
+    return await database()
+      .ref(ref)
+      .remove()
+      .then(() => {
+        return true;
+      })
+      .catch((e) => {
+        return false;
+      });
+  }
+
+   databaseKey() {
+    return database().ref().push().key;
+   
+  }
+ 
 }
 
 export default new Database();

@@ -15,12 +15,15 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import {Header} from '../../components/Header';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import colors from '../../constants/colors';
-
-export default function AddRouteScreen() {
+import Database from '../../functions/Database';
+import database from '@react-native-firebase/database';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
+export default function AddRouteScreen({navigation}) {
   const [index, setindex] = useState(0);
   const [count, setCount] = useState([]);
   const [place, setPlace] = useState([]);
   const [distance, setDistance] = useState([1]);
+  const [isLoading, setIsLoading] = useState(false);
   const __onAdd = () => {
     let check = 0;
 
@@ -35,12 +38,13 @@ export default function AddRouteScreen() {
       plus.push(index);
       setCount(plus);
       setindex((index) => index + 1);
-      
     } else {
       ToastAndroid.show('Enter All Details', ToastAndroid.SHORT);
     }
   };
-  const __onSave = () => {
+  const __onSave = async () => {
+    let key = database().ref().push().key;
+
     let check = 0;
 
     for (let index = 0; index <= count.length; index++) {
@@ -49,16 +53,28 @@ export default function AddRouteScreen() {
       }
     }
     if (check - 1 === count.length) {
-      let temp = [...distance];
-      temp[0] = 0;
-      setDistance(temp);
-    
+      let dbDistance = [...distance];
+      dbDistance[0] = 0;
+      //setDistance(temp);
+      setIsLoading(true);
+
+      let ref = `route/${key}`;
+      let value = {
+        distance: dbDistance.toString(),
+        place: place.toString(),
+        routeId: key,
+      };
+
+      let res = await Database.databaseWrite(ref, value);
+      setIsLoading(false);
+      navigation.goBack();
     } else {
       ToastAndroid.show('Enter All Details', ToastAndroid.SHORT);
     }
   };
   return (
     <>
+      <LoadingBar visible={isLoading} />
       <Header title="Add Route" isback />
       <KeyboardAvoidingScrollView style={styles.root}>
         <View style={styles.space} />
@@ -77,7 +93,6 @@ export default function AddRouteScreen() {
         />
         <View style={styles.space} />
         {count.map((item) => {
-         
           return (
             <View key={item + 1}>
               <View style={{flexDirection: 'row'}}>

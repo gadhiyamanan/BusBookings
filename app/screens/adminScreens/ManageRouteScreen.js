@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,8 +13,11 @@ import {
   Alert,
 } from 'react-native';
 import {plusIcon} from '../../assets/icons';
-import { Header } from '../../components/Header';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
+import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
+import Database from '../../functions/Database';
+import {useFocusEffect} from '@react-navigation/native';
 const data = [
   [
     'Ahmedabad',
@@ -60,8 +63,58 @@ const data = [
     'Patan',
   ],
 ];
+
 export default function ManageRouteScreen({navigation}) {
-  const renderRouteName = ({item, index}) => <Text>{item} -</Text>;
+  const [routes, setRoutes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [deleteKey, setDeleteKey] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      _getData();
+    }, []),
+  );
+
+  const _getData = async () => {
+    setIsLoading(true);
+    let res = await Database.dataBaseRead('route');
+    let routes = [];
+    let deleteKey = [];
+    res.forEach((element) => {
+      var array = element.val().place.split(',');
+      routes.push(array);
+      deleteKey.push(element.val().routeId);
+    });
+    setRoutes(routes);
+    setDeleteKey(deleteKey);
+    setIsLoading(false);
+  };
+  const __onDelete = (index) => {
+    Alert.alert('Are you sure want to delete?', '', [
+      {
+        text: 'Cancel',
+
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: async () => {
+          setIsLoading(true);
+          await Database.databaseDelete(`route/${deleteKey[index]}`);
+
+          _getData();
+        },
+      },
+    ]);
+  };
+
+  const renderRouteName = ({item, index}) => {
+    return (
+      <Text>
+        {index !== 0 && <Text> - </Text>}
+        {item}
+      </Text>
+    );
+  };
 
   const renderItem = ({item, index}) => {
     return (
@@ -78,10 +131,8 @@ export default function ManageRouteScreen({navigation}) {
             />
           </View>
           <View style={styles.deleteContainer}>
-            <TouchableOpacity>
-              <Text style={styles.deleteText} onPress={null}>
-                Delete
-              </Text>
+            <TouchableOpacity onPress={() => __onDelete(index)}>
+              <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -91,19 +142,20 @@ export default function ManageRouteScreen({navigation}) {
   };
   return (
     <>
-    <Header title="Manage Route"/>
-    <View style={styles.root}>
-      <FlatList
-        data={data}
-        keyExtractor={(__, index) => String(index)}
-        renderItem={renderItem}
-      />
-      <TouchableOpacity
-        style={styles.floatButtonContainer}
-        onPress={() => navigation.navigate('addRoute')}>
-        <Image style={styles.image} source={plusIcon} />
-      </TouchableOpacity>
-    </View>
+      <Header title="Manage Route" />
+      <LoadingBar visible={isLoading} />
+      <View style={styles.root}>
+        <FlatList
+          data={routes}
+          keyExtractor={(__, index) => String(index)}
+          renderItem={renderItem}
+        />
+        <TouchableOpacity
+          style={styles.floatButtonContainer}
+          onPress={() => navigation.navigate('addRoute')}>
+          <Image style={styles.image} source={plusIcon} />
+        </TouchableOpacity>
+      </View>
     </>
   );
 }

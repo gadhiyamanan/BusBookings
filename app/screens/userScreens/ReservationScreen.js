@@ -17,7 +17,7 @@ import {CustomButton} from '../../components/Buttoncomponent';
 import QRCode from 'react-native-qrcode-svg';
 export default function ReservationScreen({navigation, route}) {
   const {seatInfo} = route.params;
-  console.log(seatInfo);
+  
   const __bookTicket=()=>{
     var options = {
       description: 'Payment for Bus Booking',
@@ -35,9 +35,11 @@ export default function ReservationScreen({navigation, route}) {
       theme: {color: '#1592E6'}
     }
       RazorpayCheckout.open(options).then((data) => {
-      // handle success
-      console.log(data);
+      
+      
       alert(`Success: ${data}`);
+
+      let Value={seats:seatInfo.seats,duration:"1:40",from:seatInfo.__}
     }).catch((error) => {
       // handle failure
       alert(`Error: ${error.code} | ${error.description}`);
