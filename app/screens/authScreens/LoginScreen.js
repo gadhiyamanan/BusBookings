@@ -24,7 +24,7 @@ import Database from '../../functions/Database';
 import auth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
 import {LoadingBar} from '../../components/Dialog/LoadingBar';
-import { SET_USER } from '../../actions/type';
+import {SET_USER} from '../../actions/type';
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,10 +48,10 @@ export default function LoginScreen({navigation}) {
           let res = await Database.dataBaseRead(
             `user/${auth().currentUser.uid}`,
           );
-          if (res.type === 'user') {
+          if (res.val().type === 'user') {
             dispatch({
               type: SET_USER,
-              payload: res,
+              payload: res.val(),
             });
             navigation.dispatch(StackActions.replace('daskBoardStack'));
             setIsLoading(false);
@@ -115,10 +115,7 @@ export default function LoginScreen({navigation}) {
                 title={'Login'}
                 buttonContainerStyle={{backgroundColor: 'white'}}
                 buttontitleStyle={{color: colors.blue}}
-                onPress={
-                  __onLogin
-                  // navigation.dispatch(StackActions.replace('daskBoardStack'));
-                }
+                onPress={__onLogin}
               />
             </View>
           </View>

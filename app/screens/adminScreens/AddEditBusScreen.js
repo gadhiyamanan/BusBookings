@@ -121,10 +121,10 @@ export default function AddEditBusScreen({naviagtion, route}) {
       let resbus = await Database.dataBaseRead(ref);
 
       if (resbus.val() && mode === 'add') {
-        console.log('first');
+       
         ToastAndroid.show('Bus Already Added', ToastAndroid.SHORT);
       } else {
-        console.log('second');
+        
         let res = await Database.databaseWrite(ref, value);
         ToastAndroid.show(
           `Bus Details ${mode} Sucessfully`,
@@ -148,6 +148,7 @@ export default function AddEditBusScreen({naviagtion, route}) {
           source={busIcon}
           value={busNo}
           onChangeText={(value) => setBusNo(value)}
+          editable={mode !== 'edit'}
         />
         <View style={styles.space} />
         <View style={styles.facilityContainer}>
@@ -258,6 +259,7 @@ export default function AddEditBusScreen({naviagtion, route}) {
             keyboardType="decimal-pad"
             value={seats}
             onChangeText={(value) => setSeats(value)}
+            editable={mode !== 'edit'}
           />
         </View>
         <View style={styles.space} />

@@ -10,6 +10,7 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import {calenderIcon} from '../../assets/icons';
@@ -18,17 +19,106 @@ import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import {CustomButton} from '../../components/Buttoncomponent';
 import {CalenderPicker} from '../../components/Dialog/calenderPickerComponent';
-
+import Database from '../../functions/Database';
 import {useFocusEffect} from '@react-navigation/native';
+
 export default function HomeScreen({navigation}) {
-  useFocusEffect( React.useCallback(() => {}, []));
+  useFocusEffect(
+    React.useCallback(() => {
+      setBusDetails([]);
+    }, []),
+  );
 
   const [originCity, setOriginCity] = useState();
   const [destinationCity, setDestinationCity] = useState();
   const [isCalendeShow, setIsCalenderShow] = useState(false);
   const [date, setDate] = useState(new Date());
-  function __onSeachBusPress() {
-    navigation.navigate('selectBus');
+  const [busDetails, setBusDetails] = useState([]);
+
+  
+  async function __onSeachBusPress() {
+    if (originCity === destinationCity) {
+      ToastAndroid.show(
+        'Origin City And Destination City Must Be Different',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      let resJourney = await Database.dataBaseRead(
+        `journey/${moment(date).format('DDMMYYYY')}`,
+      );
+        navigation.navigate("selectBus",{resJourney:resJourney,originCity:originCity,destinationCity:destinationCity,date:date})
+    // let res=  await resJourney.forEach(async (child) => {
+    //     let resRoutes = await Database.dataBaseRead(
+    //       `route/${child.val().routeId}`,
+    //     );
+    //     let routeArray = resRoutes.val().place.split(',');
+    //     let DistanceArray = resRoutes.val().distance.split(',');
+
+    //     let checkOrigin = routeArray.filter((item) => item === originCity);
+    //     let checkDestination = routeArray.filter(
+    //       (item) => item === destinationCity,
+    //     );
+    //     if (checkOrigin.length !== 0 && checkDestination.length !== 0) {
+    //       let originIndex = routeArray.findIndex(
+    //         (obj) => obj === checkOrigin[0],
+    //       );
+    //       let DestinationIndex = routeArray.findIndex(
+    //         (obj) => obj === checkDestination[0],
+    //       );
+
+    //       if (
+    //         parseInt(DistanceArray[DestinationIndex]) >
+    //         parseInt(DistanceArray[originIndex])
+    //       ) {
+    //         let resBus = await Database.dataBaseRead(
+    //           `bus/${child.val().busNo}`,
+    //         );
+    //         let avialbaleSeats = child.val().availableSeats.split(',').length;
+    //         let facilityRes = resBus.val().facilities.split(',');
+    //         let facility = [];
+    //         if (facilityRes[0] === 'Ac') {
+    //           facility.push('Ac');
+    //         }
+    //         if (facilityRes[1] === 'Wifi') {
+    //           facility.push(' | Wifi');
+    //         }
+    //         if (facilityRes[2] === 'Tv') {
+    //           facility.push(' | Tv');
+    //         }
+    //         if (facilityRes[3] === 'Sleeper') {
+    //           facility.push(' | Sleeper');
+    //         }
+    //         if (facilityRes[3] === 'Seater') {
+    //           facility.push(' | Seater');
+    //         }
+    //         let duration = secondsToHms(
+    //           DistanceArray[DestinationIndex] - DistanceArray[originIndex],
+    //         );
+    //         let price = Math.floor(
+    //           (child.val().price *
+    //             (DistanceArray[DestinationIndex] -
+    //               DistanceArray[originIndex])) /
+    //             DistanceArray[DistanceArray.length - 1],
+    //         );
+    //         let busDetailsArray = busDetails;
+    //         busDetailsArray.push({
+    //           busNo: resBus.val().busNo,
+    //           setMap: resBus.val().seatMap,
+    //           stops: DestinationIndex - originIndex - 1,
+    //           seats: avialbaleSeats,
+    //           facility: facility.toString().replace(',', ''),
+    //           duration: duration,
+    //           price: price,
+    //         });
+    //         setBusDetails(busDetailsArray);
+            
+    //       }
+    //     }
+    //     return true;
+    //   });
+     }
+
+    //console.log('fefe', busDetails);
   }
   return (
     <>
@@ -117,27 +207,26 @@ export default function HomeScreen({navigation}) {
       </ScrollView>
     </>
   );
-}
 
-function PlaceSelectView({title, inputTextTitle, ...other}) {
-  return (
-    <View style={{flexDirection: 'row', flex: 1}}>
-      <View style={styles.fromToContainer}>
-        <Text>{title}</Text>
+  function PlaceSelectView({title, inputTextTitle, ...other}) {
+    return (
+      <View style={{flexDirection: 'row', flex: 1}}>
+        <View style={styles.fromToContainer}>
+          <Text>{title}</Text>
+        </View>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            placeholder={inputTextTitle}
+            style={styles.inputStyle}
+            placeholderTextColor="rgba(21, 146, 230, 0.5)"
+            pla
+            {...other}
+          />
+        </View>
       </View>
-      <View style={styles.textInputContainer}>
-        <TextInput
-          placeholder={inputTextTitle}
-          style={styles.inputStyle}
-          placeholderTextColor="rgba(21, 146, 230, 0.5)"
-          pla
-          {...other}
-        />
-      </View>
-    </View>
-  );
+    );
+  }
 }
-
 const styles = StyleSheet.create({
   cardContainer: {
     height: 150,

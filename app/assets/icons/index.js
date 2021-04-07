@@ -20,6 +20,7 @@ import mailIcon from "./mail.png";
 import busIcon from "./bus.png";
 import routeIcon from "./route.png";
 import plusIcon from "./plus.png";
+import menuIcon from "./menu.png";
 export {
   bookingsIcon,
   filledSeatIcon,
@@ -42,5 +43,6 @@ export {
   mailIcon,
   busIcon,
   routeIcon,
-  plusIcon
+  plusIcon,
+  menuIcon
 };

@@ -16,94 +16,45 @@ import colors from '../../constants/colors';
 import {CustomButton} from '../../components/Buttoncomponent';
 
 export default class SelectSeatScreen extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       bookedSeats: [2, 3, 7, 8, 20, 25, 40],
       selectedSeats: [],
-      seatmap: [
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-      ],
+      seatMap: props.route.params.busDetails.seatMap,
+      busDetails: props.route.params.busDetails,
+      facility: props.route.params.busDetails.facility
+        .replace(' ', ',')
+        .replace('|', '')
+        .replace(' ', '')
+        .split(','),
     };
-    // createNewSeat = [];
-    price = 2000;
+
+    price = props.route.params.busDetails.price;
   }
   componentDidMount() {
+    
     let seats = 0;
     let createNewSeat = [];
-    this.state.seatmap.map((item, index) => {
-      if (item !== 0) {
+    this.state.seatMap.map((item, index) => {
+      if (item !== '0') {
         seats += 1;
       }
-      createNewSeat.push({seatno: item === 0 ? 0 : seats, pattern: item});
+      createNewSeat.push({
+        seatno: item === 0 ? 0 : seats,
+        pattern: parseInt(item),
+      });
     });
     this.setState({
-      seatmap: createNewSeat,
+      seatMap: createNewSeat,
     });
+
+
   }
   __onNextPress = () => {
     this.props.navigation.navigate('reservation', {
       seatInfo: {
-        amount: this.state.selectedSeats.length * price,
+        amount: this.state.selectedSeats.length * this.state.busDetails.price,
         seats: this.state.selectedSeats,
       },
     });
@@ -165,29 +116,31 @@ export default class SelectSeatScreen extends React.Component {
           </View>
         </View>
         <View style={{height: 10}} />
-        <View style={styles.upDownContainer}>
-          <View style={[styles.down, {flex: 1}]}>
-            <Text style={styles.upDownText}>Down</Text>
+        {this.state.facility.filter((item) => item === 'Sleeper') && (
+          <View style={styles.upDownContainer}>
+            <View style={[styles.down, {flex: 1}]}>
+              <Text style={styles.upDownText}>Down</Text>
+            </View>
+            <View style={[styles.up, {flex: 1}]}>
+              <Text style={[styles.upDownText]}>Up</Text>
+            </View>
+            <View style={{flex: 2}} />
+            <View style={[styles.down, {flex: 2}]}>
+              <Text style={styles.upDownText}>Down</Text>
+            </View>
+            <View style={[styles.up, {flex: 2}]}>
+              <Text style={styles.upDownText}>Up</Text>
+            </View>
           </View>
-          <View style={[styles.up, {flex: 1}]}>
-            <Text style={[styles.upDownText]}>Up</Text>
-          </View>
-          <View style={{flex: 2}} />
-          <View style={[styles.down, {flex: 2}]}>
-            <Text style={styles.upDownText}>Down</Text>
-          </View>
-          <View style={[styles.up, {flex: 2}]}>
-            <Text style={styles.upDownText}>Up</Text>
-          </View>
-        </View>
+        )}
         <View style={styles.cardContainer}>
           <FlatList
-            data={this.state.seatmap}
+            data={this.state.seatMap}
             renderItem={this.renderItem}
             keyExtractor={(__, index) => String(index)}
             contentContainerStyle={styles.flatlistContainer}
             showsVerticalScrollIndicator={false}
-            numColumns={6}
+            numColumns={8}
             directionalLockEnabled={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
           />
@@ -196,7 +149,7 @@ export default class SelectSeatScreen extends React.Component {
         <View style={[styles.seatDescriptionConatiner]}>
           <View style={styles.alignCenter}>
             <Text style={styles.titleText}>Ticket Rate</Text>
-            <Text style={styles.text}>₹ {price}</Text>
+            <Text style={styles.text}>₹ {this.state.busDetails.price}</Text>
           </View>
           <View style={styles.alignCenter}>
             <Text style={styles.titleText}>No Of Seats</Text>
@@ -205,7 +158,7 @@ export default class SelectSeatScreen extends React.Component {
           <View style={styles.alignCenter}>
             <Text style={styles.titleText}>Total Amount</Text>
             <Text style={styles.text}>
-              ₹ {this.state.selectedSeats.length * price}
+              ₹ {this.state.selectedSeats.length * this.state.busDetails.price}
             </Text>
           </View>
         </View>

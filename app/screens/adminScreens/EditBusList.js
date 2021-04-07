@@ -21,16 +21,14 @@ export default function EditBusList({navigation}) {
   const [busNo, setBusNo] = useState([]);
   const [isLoading, setIsLoading] = useState();
   useEffect(() => {
-   
     _getData();
   }, []);
 
   const _getData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     let res = await Database.dataBaseRead('bus/');
     let busNo = [];
     res.forEach(function (childSnapshot) {
-     
       busNo.push(childSnapshot.val().busNo);
     });
     setBusNo(busNo);
@@ -39,7 +37,6 @@ export default function EditBusList({navigation}) {
   const renderItem = ({item, index}) => {
     return (
       <>
-        
         <View style={styles.itemContainer}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={busIcon} style={styles.image} />
@@ -51,7 +48,9 @@ export default function EditBusList({navigation}) {
             onPress={() => __onEdit(item)}>
             <Text style={styles.touchableText}>Edit</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{marginHorizontal: 15}} onPress={() =>__onDelete(item)}>
+          <TouchableOpacity
+            style={{marginHorizontal: 15}}
+            onPress={() => __onDelete(item)}>
             <Text style={styles.touchableText}>Delete</Text>
           </TouchableOpacity>
         </View>
@@ -66,15 +65,15 @@ export default function EditBusList({navigation}) {
       editBusNo: item,
     });
   };
-  const __onDelete = async(item) => {
-    setIsLoading(true)
-   let res= await Database.databaseDelete(`bus/${item}`)
-   _getData()
-   setIsLoading(false)
+  const __onDelete = async (item) => {
+    setIsLoading(true);
+    let res = await Database.databaseDelete(`bus/${item}`);
+    _getData();
+    setIsLoading(false);
   };
   return (
     <>
-    <LoadingBar visible={isLoading} />
+      <LoadingBar visible={isLoading} />
       <Header title="Edit Bus" isback />
       <FlatList
         data={busNo}

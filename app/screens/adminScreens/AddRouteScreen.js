@@ -57,11 +57,32 @@ export default function AddRouteScreen({navigation}) {
       dbDistance[0] = 0;
       //setDistance(temp);
       setIsLoading(true);
+      let allPlaceres = await Database.dataBaseRead(`allPlace/allPlace`);
+    
+      if (allPlaceres.val()) {
+        let allPlace = allPlaceres.val().toLowerCase().split(',');
+        let placeSmall = [];
+        place.forEach((element) => {
+          placeSmall.push(element.toString().toLowerCase());
+        });
+        let array = allPlace.concat(placeSmall);
+        mergeArray = array.filter((item, pos) => array.indexOf(item) === pos);
+
+        await Database.databaseWrite(
+          `allPlace/allPlace`,
+          mergeArray.toString().toLowerCase(),
+        );
+      } else {
+        await Database.databaseWrite(
+          `allPlace/allPlace`,
+          place.toString().toLowerCase(),
+        );
+      }
 
       let ref = `route/${key}`;
       let value = {
         distance: dbDistance.toString(),
-        place: place.toString(),
+        place: place.toString().toLowerCase(),
         routeId: key,
       };
 

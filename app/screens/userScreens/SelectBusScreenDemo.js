@@ -13,8 +13,6 @@ import {Header} from '../../components/Header';
 import {RatingBar} from '../../components/RatingBar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Database from '../../functions/Database';
-import {LoadingBar} from '../../components/Dialog/LoadingBar';
-
 const DATA = [
   {
     facility: 'AC&FAN | Wifi | Sleeper',
@@ -51,24 +49,13 @@ const DATA = [
   },
 ];
 
-export default class SelectBusScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      busDetails: [],
-      resJourney: props.route.params.resJourney,
-      destinationCity: props.route.params.destinationCity,
-      originCity: props.route.params.originCity,
-      date:props.route.params.date,
-      isLoading: false,
-    };
-  }
-
-  componentDidMount() {
-    this._getData();
-  }
-
-  secondsToHms = (d) => {
+export default function SelectBusScreen({navigation, route}) {
+  const {resJourney, destinationCity, originCity} = route.params;
+  const [busDetails, setBusDetails] = useState([]);
+  useEffect(() => {
+    _getData();
+  }, [setBusDetails]);
+  function secondsToHms(d) {
     d = Number(d);
     var h = Math.floor(d / 3600);
     var m = Math.floor((d % 3600) / 60);
@@ -76,21 +63,18 @@ export default class SelectBusScreen extends React.Component {
 
     if (h == 0 || m == 0) return m + ':' + s;
     return h + ':' + m + ':' + s;
-  };
-  _getData = async () => {
-    this.setState({isLoading: true});
-    await this.state.resJourney.forEach(async (child) => {
+  }
+  const _getData = async () => {
+    resJourney.forEach(async (child) => {
       let resRoutes = await Database.dataBaseRead(
         `route/${child.val().routeId}`,
       );
       let routeArray = resRoutes.val().place.split(',');
       let DistanceArray = resRoutes.val().distance.split(',');
 
-      let checkOrigin = routeArray.filter(
-        (item) => item === this.state.originCity,
-      );
+      let checkOrigin = routeArray.filter((item) => item === originCity);
       let checkDestination = routeArray.filter(
-        (item) => item === this.state.destinationCity,
+        (item) => item === destinationCity,
       );
       if (checkOrigin.length !== 0 && checkDestination.length !== 0) {
         let originIndex = routeArray.findIndex((obj) => obj === checkOrigin[0]);
@@ -121,7 +105,7 @@ export default class SelectBusScreen extends React.Component {
           if (facilityRes[3] === 'Seater') {
             facility.push(' | Seater');
           }
-          let duration = this.secondsToHms(
+          let duration = secondsToHms(
             DistanceArray[DestinationIndex] - DistanceArray[originIndex],
           );
           let price = Math.floor(
@@ -129,34 +113,31 @@ export default class SelectBusScreen extends React.Component {
               (DistanceArray[DestinationIndex] - DistanceArray[originIndex])) /
               DistanceArray[DistanceArray.length - 1],
           );
-          let busDetailsArray = this.state.busDetails;
-          let seatMap=resBus.val().seatMap.split(',')
+          let busDetailsArray = busDetails;
           busDetailsArray.push({
             busNo: resBus.val().busNo,
-            seatMap: seatMap,
+            setMap: resBus.val().seatMap,
             stops: DestinationIndex - originIndex - 1,
             seats: avialbaleSeats,
             facility: facility.toString().replace(',', ''),
             duration: duration,
             price: price,
-            date:this.state.date,
-            routeId:child.val().routeId
           });
-          this.setState({busDetails: busDetailsArray});
+          setBusDetails(busDetailsArray);
         }
       }
     });
-    this.setState({isLoading: false});
   };
 
-  __onBusPress = (item) => {
-    this.props.navigation.navigate('selectSeat',{busDetails:item});
-  };
-  renderItem = ({item}) => {
+
+  function __onBusPress() {
+    navigation.navigate('selectSeat');
+  }
+  const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.cardContainer}
-        onPress={()=>this.__onBusPress(item)}>
+        onPress={() => __onBusPress()}>
         <View style={styles.titleContiner}>
           <Text style={styles.title}>S G Travels</Text>
         </View>
@@ -184,28 +165,21 @@ export default class SelectBusScreen extends React.Component {
       </TouchableOpacity>
     );
   };
+  //const [stars, setStars] = useState([]);
 
-  render() {
-    return (
-      <>
-        <Header title="Select Bus" isback />
-        <LoadingBar visible={this.state.isLoading} />
-        <FlatList
-          data={this.state.busDetails}
-          renderItem={this.renderItem}
-          keyExtractor={(__, index) => String(index)}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{marginTop: 10}}
-          ListFooterComponent={<View style={{height: 20}} />}
-          ListEmptyComponent={
-            <View style={{alignItems: 'center'}}>
-              <Text>No Bus Found</Text>
-            </View>
-          }
-        />
-      </>
-    );
-  }
+  return (
+    <>
+      <Header title="Select Bus" isback />
+      <FlatList
+        data={busDetails}
+        renderItem={renderItem}
+        keyExtractor={(__, index) => String(index)}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{marginTop: 10}}
+        ListFooterComponent={<View style={{height: 20}} />}
+      />
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

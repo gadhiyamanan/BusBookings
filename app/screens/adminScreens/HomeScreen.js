@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -11,8 +11,9 @@ import {
   Image,
   TouchableOpacity,
   ToastAndroid,
+ 
 } from 'react-native';
-import {calenderIcon} from '../../assets/icons';
+import {calenderIcon, menuIcon} from '../../assets/icons';
 import moment from 'moment';
 import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
@@ -22,6 +23,10 @@ import {useFocusEffect} from '@react-navigation/native';
 import Database from '../../functions/Database';
 import database from '@react-native-firebase/database';
 import {LoadingBar} from '../../components/Dialog/LoadingBar';
+import Menu, {MenuItem} from 'react-native-material-menu';
+import auth from '@react-native-firebase/auth';
+import {StackActions} from '@react-navigation/native';
+import {TextInputComponent} from '../../components/TextInputComponent';
 export default function HomeScreen({navigation}) {
   useFocusEffect(React.useCallback(() => {}, []));
   const [date, setDate] = useState(new Date());
@@ -30,13 +35,18 @@ export default function HomeScreen({navigation}) {
   const [busNo, setBusNo] = useState();
   const [isCalendeShow, setIsCalenderShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [price, setPrice] = useState("");
+  const menuref = useRef();
   const __onConfirm = async () => {
     let key = database().ref().push().key;
     if (!busNo) {
       ToastAndroid.show('PLease Select Bus No', ToastAndroid.SHORT);
     } else if (!route) {
       ToastAndroid.show('PLease Select Route', ToastAndroid.SHORT);
-    } else {
+    }else if (price==="") {
+      ToastAndroid.show('PLease Enter Price', ToastAndroid.SHORT);
+    }
+     else {
       setIsLoading(true);
       let res = await Database.dataBaseRead(
         `journey/${moment(date).format('DDMMYYYY')}`,
@@ -47,11 +57,24 @@ export default function HomeScreen({navigation}) {
       });
       let busCheck = busno.filter((item) => item === busNo);
       if (busCheck.length === 0) {
+        let resBus = await Database.dataBaseRead(`bus/${busNo}`);
+        let seats = resBus.val().seatMap.split(',');
+        let availableSeats = [];
+        let counter = 0;
+        for (let i = 0; i < seats.length; i++) {
+          if (seats[i] == 1) {
+            counter = counter + 1;
+            availableSeats.push(counter);
+          }
+        }
+
         let ref = `journey/${moment(date).format('DDMMYYYY')}/${key}`;
         let value = {
           busNo: busNo,
           routeId: routeId,
           date: `${moment(date).format('DDMMYYYY')}`,
+          availableSeats: availableSeats.toString(),
+          price:price
         };
         await Database.databaseWrite(ref, value);
         ToastAndroid.show('Bus Journey Confirm', ToastAndroid.SHORT);
@@ -64,9 +87,28 @@ export default function HomeScreen({navigation}) {
       setIsLoading(false);
     }
   };
+  const showMenu = () => {
+    menuref.current.show();
+  };
+  const __logout = () => {
+    menuref.current.hide();
+    auth()
+      .signOut()
+      .then(() => navigation.dispatch(StackActions.replace('authStack')));
+  };
   return (
     <>
-      <Header title="Home" />
+      <View>
+        <Header title="Home" />
+        <TouchableOpacity style={styles.menuIconContainer} onPress={showMenu}>
+          <Menu
+            ref={menuref}
+            button={<Image source={menuIcon} style={styles.menu} />}>
+            <MenuItem onPress={__logout}>Logout</MenuItem>
+          </Menu>
+        </TouchableOpacity>
+      </View>
+
       <LoadingBar visible={isLoading} />
       <CalenderPicker
         isModalVisible={isCalendeShow}
@@ -147,11 +189,22 @@ export default function HomeScreen({navigation}) {
           </View>
         </View>
         <View style={{height: 20}} />
+        <TextInputComponent
+          value={price}
+          onChangeText={(text) => {
+            setPrice(text)
+          }}
+          textInputContainerStyle={{marginHorizontal: 15}}
+          placeholder="Enter Price"
+          keyboardType="number-pad"
+        />
+        <View style={{height: 20}} />
         <CustomButton
           title="Confim Journey"
           buttonContainerStyle={{marginHorizontal: 15}}
           onPress={__onConfirm}
         />
+        <View style={{height: 20}} />
       </ScrollView>
     </>
   );
@@ -220,4 +273,11 @@ const styles = StyleSheet.create({
   calenderImage: {height: '100%', width: '100%', resizeMode: 'contain'},
   dateText: {fontSize: 20, color: colors.blue},
   calendar: {flexDirection: 'row', justifyContent: 'space-around', flex: 1},
+  menuIconContainer: {
+    position: 'absolute',
+    right: 13,
+    height: '100%',
+    justifyContent: 'center',
+  },
+  menu: {height: 18, width: 18, tintColor: colors.white, resizeMode: 'contain'},
 });

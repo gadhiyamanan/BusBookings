@@ -95,6 +95,11 @@ export default function SelectBusScreen({navigation, route}) {
         renderItem={renderItem}
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View style={{alignItems: 'center'}}>
+            <Text>No Records Found</Text>
+          </View>
+        }
       />
     </>
   );

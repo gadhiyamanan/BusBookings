@@ -18,51 +18,6 @@ import {Header} from '../../components/Header';
 import colors from '../../constants/colors';
 import Database from '../../functions/Database';
 import {useFocusEffect} from '@react-navigation/native';
-const data = [
-  [
-    'Ahmedabad',
-    'Amreli',
-    'Anand',
-    'Banaskantha',
-    'Bharuch',
-    'Bhavnagar',
-    'Dahod',
-    'Dang',
-    'Navsari',
-    'Patan',
-  ],
-  [
-    'Ahmedabad',
-    'Amreli',
-    'Anand',
-    'Banaskantha',
-    'Gandhinagar',
-    'Jamnagar',
-    'Junagadh',
-    'Kutch',
-    'Kheda',
-    'Mehsana',
-    'Narmada',
-    'Navsari',
-    'Patan',
-  ],
-  [
-    'Ahmedabad',
-    'Amreli',
-    'Anand',
-    'Banaskantha',
-    'Dangs',
-    'Gandhinagar',
-    'Jamnagar',
-    'Junagadh',
-    'Kutch',
-    'Kheda',
-    'Mehsana',
-    'Narmada',
-    'Navsari',
-    'Patan',
-  ],
-];
 
 export default function ManageRouteScreen({navigation}) {
   const [routes, setRoutes] = useState([]);
@@ -149,6 +104,11 @@ export default function ManageRouteScreen({navigation}) {
           data={routes}
           keyExtractor={(__, index) => String(index)}
           renderItem={renderItem}
+          ListEmptyComponent={
+            <View style={{alignItems: 'center'}}>
+              <Text>No Records Found</Text>
+            </View>
+          }
         />
         <TouchableOpacity
           style={styles.floatButtonContainer}

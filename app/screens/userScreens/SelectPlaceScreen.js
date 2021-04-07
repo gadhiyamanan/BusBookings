@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,7 +15,9 @@ import {
 } from 'react-native';
 import {leftarrowIcon} from '../../assets/icons';
 import {logo} from '../../assets/Images';
+import { LoadingBar } from '../../components/Dialog/LoadingBar';
 import colors from '../../constants/colors';
+import Database from '../../functions/Database';
 const DATA = [
   'Ahmedabad',
   'Amreli district',
@@ -44,12 +46,24 @@ const DATA = [
   'Vadodara',
   'Valsad',
 ];
-export default function SelectPlaceScreen({navigation,route}) {
+export default function SelectPlaceScreen({navigation, route}) {
+  
   const [placeName, setpalceName] = useState();
-  const [data, setdata] = useState(DATA);
-  
-  const { title,setCity } = route.params;
-  
+  const [data, setData] = useState("");
+  const [allPlace,setAllPlace]=useState("")
+  const [isLoading,setIsLoading]=useState(false)
+  useEffect(() => {
+    _getData();
+  }, []);
+  const _getData = async () => {
+    setIsLoading(true)
+    let res = await Database.dataBaseRead('allPlace/allPlace');
+    setAllPlace(res.val().split(','))
+    setData(res.val().split(','))
+    setIsLoading(false)
+  };
+  const {title, setCity} = route.params;
+
   const renderItem = ({item}) => {
     return (
       <>
@@ -65,31 +79,30 @@ export default function SelectPlaceScreen({navigation,route}) {
     );
   };
 
-
   function _changeText(text) {
     let textLowerCase = text.toLowerCase();
-    let trucks = DATA;
+    let trucks = allPlace;
     let filteredName = trucks.filter((item) => {
       return item.toLowerCase().match(textLowerCase);
     });
-    setdata(filteredName);
+    setData(filteredName);
     setpalceName(text);
   }
 
   function __onCityPress(item) {
     setpalceName(item);
     setCity(item);
-    navigation.navigate("home")
+    navigation.navigate('home');
   }
   return (
     <>
       <SafeAreaView backgroundColor={colors.blue} />
+      <LoadingBar visible={isLoading}/>
       <View style={styles.inputContainar}>
         <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => {
-         
-            navigation.navigate("home")
+            navigation.navigate('home');
           }}>
           <Image source={leftarrowIcon} style={styles.image} />
         </TouchableOpacity>

@@ -14,10 +14,10 @@ export default function Splashscreen({navigation}) {
     if (auth().currentUser) {
       let res = await Database.dataBaseRead(`user/${auth().currentUser.uid}`);
 
-      if (res.type === 'user') {
+      if (res.val().type === 'user') {
         dispatch({
           type: SET_USER,
-          payload: res,
+          payload: res.val(),
         });
         navigation.dispatch(StackActions.replace('daskBoardStack'));
       } else {
