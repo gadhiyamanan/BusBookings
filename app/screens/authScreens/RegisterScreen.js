@@ -29,10 +29,10 @@ import {SET_USER} from '../../actions/type';
 
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('test1@gmail.com');
-  const [name, setName] = useState('test1');
-  const [password, setPassword] = useState('123456');
-  const [confirmPasswod, setConfirmPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPasswod, setConfirmPassword] = useState('');
   const [isloading, setIsLoading] = useState(false);
   const __onSignUp = () => {
     setIsLoading(true);
@@ -135,7 +135,7 @@ export default function LoginScreen({navigation}) {
                 buttontitleStyle={{color: colors.blue}}
                 onPress={
                   __onSignUp
-                  //
+             
                 }
               />
             </View>

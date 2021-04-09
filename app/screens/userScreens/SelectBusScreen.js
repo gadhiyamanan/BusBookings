@@ -130,17 +130,22 @@ export default class SelectBusScreen extends React.Component {
               DistanceArray[DistanceArray.length - 1],
           );
           let busDetailsArray = this.state.busDetails;
-          let seatMap=resBus.val().seatMap.split(',')
+          let seatMap=resBus.val().seatMap.split(',').map(function(item) {
+            return parseInt(item);
+        });
           busDetailsArray.push({
             busNo: resBus.val().busNo,
             seatMap: seatMap,
             stops: DestinationIndex - originIndex - 1,
             seats: avialbaleSeats,
-            facility: facility.toString().replace(',', ''),
+            facility: facility.toString().replace('Wifi,', 'Wifi').replace('Tv,', 'Tv').replace(',', ''),
             duration: duration,
             price: price,
             date:this.state.date,
-            routeId:child.val().routeId
+            routeId:child.val().routeId,
+            originCity:this.state.originCity,
+            destinationCity:this.state.destinationCity,
+            journeyId:child.val().journeyId
           });
           this.setState({busDetails: busDetailsArray});
         }

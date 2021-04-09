@@ -74,7 +74,8 @@ export default function HomeScreen({navigation}) {
           routeId: routeId,
           date: `${moment(date).format('DDMMYYYY')}`,
           availableSeats: availableSeats.toString(),
-          price:price
+          price:price,
+          journeyId:key
         };
         await Database.databaseWrite(ref, value);
         ToastAndroid.show('Bus Journey Confirm', ToastAndroid.SHORT);

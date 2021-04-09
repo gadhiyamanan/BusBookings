@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import {Header} from '../../components/Header';
-import {RatingBar} from '../../components/RatingBar';
-
+import {useFocusEffect} from '@react-navigation/native';
+import Database from '../../functions/Database';
+import {useSelector} from 'react-redux';
+import moment from 'moment';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 const DATA = [
   {
     facility: 'AC&FAN | Wifi | Sleeper',
@@ -69,10 +72,48 @@ const DATA = [
 ];
 
 export default function BookingsScreen({navigation}) {
+  const userDetails = useSelector(({user}) => user.userData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(false);
+  useFocusEffect(
+    React.useCallback(() => {
+      _getData();
+    }, []),
+  );
+  const _getData = async () => {
+    setIsLoading(true);
+    let data = [];
+    let res = await Database.dataBaseRead(`bookings/${userDetails.userId}`);
+
+    res.forEach((element) => {
+      data.push({
+        facility: element.val().facility,
+        seats: element
+          .val()
+          .seats.split(',')
+          .map(function (item) {
+            return parseInt(item);
+          })
+          .sort(),
+        duration: element.val().duration,
+        stops: element.val().stops,
+        price: element.val().price,
+        date: element.val().date,
+        from: element.val().originCity,
+        to: element.val().destinationCity,
+        busNo: element.val().busNo,
+        ticketId: element.val().ticketId,
+        transactionId: element.val().transactionId,
+      });
+    });
+    setData(data);
+    setIsLoading(false);
+  };
   const __onTicketPress = (item) => {
     navigation.navigate('ticketScreen', {bookedBusDetail: item});
   };
   const renderItem = ({item}) => {
+    console.log(item.date);
     return (
       <TouchableOpacity
         style={styles.cardContainer}
@@ -84,9 +125,9 @@ export default function BookingsScreen({navigation}) {
         <View style={styles.descriptionContainer}>
           <Text>{item.seats.length} seats</Text>
           <View style={styles.roundView} />
-          <Text>{item.duration}</Text>
+          <Text>{item.duration} hrs</Text>
           <View style={styles.roundView} />
-          <Text>{item.stops}</Text>
+          <Text>{item.stops} stops</Text>
         </View>
         <View style={styles.space} />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -96,7 +137,12 @@ export default function BookingsScreen({navigation}) {
             </Text>
           </View>
           <View>
-            <Text style={{color: colors.lightblue}}>Date : {item.date}</Text>
+            <Text style={{color: colors.lightblue}}>
+              Date :
+              {moment(item.date).format('DD/MM/YYYY') === 'Invalid date'
+                ? moment(parseInt(item.date)).format('DD/MM/YYYY')
+                : moment(item.date).format('DD/MM/YYYY')}
+            </Text>
           </View>
         </View>
         <View style={styles.space} />
@@ -107,13 +153,19 @@ export default function BookingsScreen({navigation}) {
   return (
     <>
       <Header title="Bookings" />
+      <LoadingBar visible={isLoading} />
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(__, index) => String(index)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{marginTop: 10}}
         ListFooterComponent={<View style={{height: 20}} />}
+        ListEmptyComponent={
+          <View style={{alignItems: 'center'}}>
+            <Text>No Bookings Found</Text>
+          </View>
+        }
       />
     </>
   );
@@ -123,7 +175,6 @@ const styles = StyleSheet.create({
   ratingImage: {height: 30, width: 30},
   filled: {tintColor: '#FFDF00'},
   cardContainer: {
-    //height: 150,
     borderRadius: 13,
     marginHorizontal: 15,
     marginVertical: 10,

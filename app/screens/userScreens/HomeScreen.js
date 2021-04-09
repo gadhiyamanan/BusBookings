@@ -29,13 +29,12 @@ export default function HomeScreen({navigation}) {
     }, []),
   );
 
-  const [originCity, setOriginCity] = useState();
-  const [destinationCity, setDestinationCity] = useState();
+  const [originCity, setOriginCity] = useState('');
+  const [destinationCity, setDestinationCity] = useState('');
   const [isCalendeShow, setIsCalenderShow] = useState(false);
   const [date, setDate] = useState(new Date());
   const [busDetails, setBusDetails] = useState([]);
 
-  
   async function __onSeachBusPress() {
     if (originCity === destinationCity) {
       ToastAndroid.show(
@@ -46,80 +45,15 @@ export default function HomeScreen({navigation}) {
       let resJourney = await Database.dataBaseRead(
         `journey/${moment(date).format('DDMMYYYY')}`,
       );
-        navigation.navigate("selectBus",{resJourney:resJourney,originCity:originCity,destinationCity:destinationCity,date:date})
-    // let res=  await resJourney.forEach(async (child) => {
-    //     let resRoutes = await Database.dataBaseRead(
-    //       `route/${child.val().routeId}`,
-    //     );
-    //     let routeArray = resRoutes.val().place.split(',');
-    //     let DistanceArray = resRoutes.val().distance.split(',');
-
-    //     let checkOrigin = routeArray.filter((item) => item === originCity);
-    //     let checkDestination = routeArray.filter(
-    //       (item) => item === destinationCity,
-    //     );
-    //     if (checkOrigin.length !== 0 && checkDestination.length !== 0) {
-    //       let originIndex = routeArray.findIndex(
-    //         (obj) => obj === checkOrigin[0],
-    //       );
-    //       let DestinationIndex = routeArray.findIndex(
-    //         (obj) => obj === checkDestination[0],
-    //       );
-
-    //       if (
-    //         parseInt(DistanceArray[DestinationIndex]) >
-    //         parseInt(DistanceArray[originIndex])
-    //       ) {
-    //         let resBus = await Database.dataBaseRead(
-    //           `bus/${child.val().busNo}`,
-    //         );
-    //         let avialbaleSeats = child.val().availableSeats.split(',').length;
-    //         let facilityRes = resBus.val().facilities.split(',');
-    //         let facility = [];
-    //         if (facilityRes[0] === 'Ac') {
-    //           facility.push('Ac');
-    //         }
-    //         if (facilityRes[1] === 'Wifi') {
-    //           facility.push(' | Wifi');
-    //         }
-    //         if (facilityRes[2] === 'Tv') {
-    //           facility.push(' | Tv');
-    //         }
-    //         if (facilityRes[3] === 'Sleeper') {
-    //           facility.push(' | Sleeper');
-    //         }
-    //         if (facilityRes[3] === 'Seater') {
-    //           facility.push(' | Seater');
-    //         }
-    //         let duration = secondsToHms(
-    //           DistanceArray[DestinationIndex] - DistanceArray[originIndex],
-    //         );
-    //         let price = Math.floor(
-    //           (child.val().price *
-    //             (DistanceArray[DestinationIndex] -
-    //               DistanceArray[originIndex])) /
-    //             DistanceArray[DistanceArray.length - 1],
-    //         );
-    //         let busDetailsArray = busDetails;
-    //         busDetailsArray.push({
-    //           busNo: resBus.val().busNo,
-    //           setMap: resBus.val().seatMap,
-    //           stops: DestinationIndex - originIndex - 1,
-    //           seats: avialbaleSeats,
-    //           facility: facility.toString().replace(',', ''),
-    //           duration: duration,
-    //           price: price,
-    //         });
-    //         setBusDetails(busDetailsArray);
-            
-    //       }
-    //     }
-    //     return true;
-    //   });
-     }
-
-    //console.log('fefe', busDetails);
+      navigation.navigate('selectBus', {
+        resJourney: resJourney,
+        originCity: originCity,
+        destinationCity: destinationCity,
+        date: date,
+      });
+    }
   }
+  
   return (
     <>
       <CalenderPicker

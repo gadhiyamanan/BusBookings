@@ -16,15 +16,22 @@ import {logo} from '../../assets/Images';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {ArrowIcon} from '../../assets/icons';
 import {RatingBar} from '../../components/RatingBar';
+import moment from 'moment';
 export default function TicketScreen({route}) {
   const {bookedBusDetail} = route.params;
   const renderItem = ({item}) => <Text style={styles.darkText}>{item} </Text>;
+  const __onStar = (rating) => {
+    console.log(rating);
+  };
   return (
     <>
       <Header isback title="Ticket" />
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <View style={{height: verticalScale(20)}} />
+          <View style={{height: verticalScale(10)}} />
+          <View style={{alignItems: 'center'}}>
+            <Text style={{fontSize: 13}}>{bookedBusDetail.busNo}</Text>
+          </View>
           <View style={styles.fromToContainer}>
             <View style={styles.leftSide}>
               <Text style={styles.lightText}>From</Text>
@@ -44,7 +51,12 @@ export default function TicketScreen({route}) {
           <View style={styles.descriptionContainer}>
             <View style={styles.leftSubDescriptionContainer}>
               <Text style={styles.lightText}>Journey Date</Text>
-              <Text style={styles.darkText}>{bookedBusDetail.date}</Text>
+              <Text style={[styles.darkText, {fontSize: scale(11)}]}>
+                {moment(bookedBusDetail.date).format('DD/MM/YYYY') ===
+                'Invalid date'
+                  ? moment(parseInt(bookedBusDetail.date)).format('DD/MM/YYYY')
+                  : moment(bookedBusDetail.date).format('DD/MM/YYYY')}
+              </Text>
               <View style={styles.space} />
               <Text style={styles.lightText}>Seats</Text>
               <Text style={styles.dark}>{bookedBusDetail.seats.length}</Text>
@@ -52,7 +64,9 @@ export default function TicketScreen({route}) {
             </View>
             <View style={styles.rightSubDescriptionContainer}>
               <Text style={styles.lightText}>Ticket Id</Text>
-              <Text style={styles.darkText}>{bookedBusDetail.ticketId}</Text>
+              <Text style={[styles.darkText, {fontSize: scale(11)}]}>
+                {bookedBusDetail.ticketId}
+              </Text>
               <View style={styles.space} />
               <Text style={styles.lightText}>Seat No</Text>
               <FlatList
@@ -96,8 +110,12 @@ export default function TicketScreen({route}) {
         </View>
         <View style={styles.starCarContainer}>
           <RatingBar
-            getStar={(rating) => console.log(rating)}
+            getStar={(rating) => __onStar(rating)}
             containerStyle={{justifyContent: 'space-evenly'}}
+            isdisabled={
+              moment(new Date()).format('YYYY/MM/DD') <
+              moment(bookedBusDetail.date).format('YYYY/MM/DD')
+            }
           />
         </View>
       </View>
@@ -121,12 +139,12 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: colors.white,
-    marginHorizontal:60,
+    marginHorizontal: 60,
     height: verticalScale(450),
     borderRadius: 10,
   },
   descriptionContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     flexDirection: 'row',
   },
   space: {

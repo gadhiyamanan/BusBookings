@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,28 +7,36 @@ import {
   Text,
   StatusBar,
   Image,
+  ToastAndroid,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../constants/colors';
-
+import auth from '@react-native-firebase/auth';
 import {TextInputComponent} from '../../components/TextInputComponent';
 import {CustomButton} from '../../components/Buttoncomponent';
 import fonts from '../../constants/fonts';
 
 import {StackActions} from '@react-navigation/native';
 import {Header} from '../../components/Header';
-import { mailIcon } from '../../assets/icons';
+import {mailIcon} from '../../assets/icons';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 export default function ResetPasswordScreen({navigation}) {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const __resetPassword = async () => {
+    setIsLoading(true);
+    await auth().sendPasswordResetEmail(email).then(()=>ToastAndroid.show("Password Reset Link Send on Your Registered Email",ToastAndroid.SHORT)).catch((e)=>{
+      ToastAndroid.show(e.message,ToastAndroid.SHORT)
+    })
+    setIsLoading(false);
+  };
   return (
     <View style={styles.container}>
+      <LoadingBar visible={isLoading} />
       <KeyboardAwareScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
-
-        <Header
-          isback
-          title={"Forget Password"}
-        />      
+        <Header isback title={'Forget Password'} />
         <View style={styles.loginContainer}>
           <View style={{width: '100%', padding: 30}}>
             <View style={styles.cardContainer}>
@@ -36,15 +44,19 @@ export default function ResetPasswordScreen({navigation}) {
                 textInputContainerStyle={{paddingHorizontal: 10}}
                 placeholder="Enter Email"
                 source={mailIcon}
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                keyboardType="email-address"
               />
               <View style={{height: 30}} />
               <CustomButton
                 title={'Change Password'}
                 buttonContainerStyle={{backgroundColor: 'white'}}
                 buttontitleStyle={{color: colors.blue}}
-                onPress={() => {
-                  navigation.dispatch(StackActions.replace('authStack'));
-                }}
+                onPress={
+                  __resetPassword
+                 
+                }
               />
             </View>
           </View>
@@ -62,7 +74,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   loginContainer: {
-    
     justifyContent: 'center',
 
     alignItems: 'center',

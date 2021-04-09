@@ -35,6 +35,17 @@ class Database {
         return false;
       });
   }
+  async databaseUpdate(ref, value) {
+    return await database()
+      .ref(ref)
+      .update(value)
+      .then(() => {
+        return true;
+      })
+      .catch((e) => {
+        return false;
+      });
+  }
 
    databaseKey() {
     return database().ref().push().key;

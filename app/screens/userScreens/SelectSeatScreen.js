@@ -14,30 +14,55 @@ import {Header} from '../../components/Header';
 import {SeatComponent} from '../../components/seatComponent';
 import colors from '../../constants/colors';
 import {CustomButton} from '../../components/Buttoncomponent';
-
+import database from '@react-native-firebase/database';
+import moment from 'moment';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 export default class SelectSeatScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookedSeats: [2, 3, 7, 8, 20, 25, 40],
+      bookedSeats: [],
       selectedSeats: [],
       seatMap: props.route.params.busDetails.seatMap,
       busDetails: props.route.params.busDetails,
       facility: props.route.params.busDetails.facility
-        .replace(' ', ',')
-        .replace('|', '')
-        .replace(' ', '')
+        .split(' ')
+        .join(',')
+        .split('|')
+        .join(',')
+        .split(' ')
+        .join('')
         .split(','),
+      onValueChange: null,
+      isLoading: false,
     };
 
-    price = props.route.params.busDetails.price;
+    //price = props.route.params.busDetails.price;
   }
   componentDidMount() {
-    
+    this.setState({isLoading: true});
+    this.state.onValueChange = database()
+      .ref(
+        `/journey/${moment(this.state.busDetails.date).format('DDMMYYYY')}/${
+          this.state.busDetails.journeyId
+        }/bookedSeats/`,
+      )
+      .on('value', (snapshot) => {
+        if (snapshot.val()) {
+          let bookedSeats = snapshot
+            .val()
+            .split(',')
+            .map(function (item) {
+              return parseInt(item);
+            });
+          this.setState({bookedSeats: bookedSeats});
+        }
+      });
+
     let seats = 0;
     let createNewSeat = [];
     this.state.seatMap.map((item, index) => {
-      if (item !== '0') {
+      if (item !== 0) {
         seats += 1;
       }
       createNewSeat.push({
@@ -48,14 +73,26 @@ export default class SelectSeatScreen extends React.Component {
     this.setState({
       seatMap: createNewSeat,
     });
+    this.setState({isLoading: false});
+  }
 
-
+  componentWillUnmount() {
+    database()
+      .ref(
+        `/journey/${moment(this.state.busDetails.date).format('DDMMYYYY')}/${
+          this.state.busDetails.journeyId
+        }/bookedSeats/`,
+      )
+      .off('value', this.state.onValueChange);
   }
   __onNextPress = () => {
     this.props.navigation.navigate('reservation', {
       seatInfo: {
         amount: this.state.selectedSeats.length * this.state.busDetails.price,
         seats: this.state.selectedSeats,
+      },
+      busDetails: {
+        busDetails: this.state.busDetails,
       },
     });
   };
@@ -96,10 +133,12 @@ export default class SelectSeatScreen extends React.Component {
       <View style={{flex: 1}} />
     );
   };
+
   render() {
     return (
       <>
         <Header title="Select Seat" isback />
+        <LoadingBar visible={this.state.isLoading} />
         <View style={{height: 10}} />
         <View style={styles.seatDescriptionConatiner}>
           <View style={styles.alignCenter}>
@@ -116,7 +155,8 @@ export default class SelectSeatScreen extends React.Component {
           </View>
         </View>
         <View style={{height: 10}} />
-        {this.state.facility.filter((item) => item === 'Sleeper') && (
+        {this.state.facility.filter((item) => item === 'Sleeper').length !==
+          0 && (
           <View style={styles.upDownContainer}>
             <View style={[styles.down, {flex: 1}]}>
               <Text style={styles.upDownText}>Down</Text>
@@ -140,7 +180,12 @@ export default class SelectSeatScreen extends React.Component {
             keyExtractor={(__, index) => String(index)}
             contentContainerStyle={styles.flatlistContainer}
             showsVerticalScrollIndicator={false}
-            numColumns={8}
+            numColumns={
+              this.state.facility.filter((item) => item === 'Sleeper')
+                .length !== 0
+                ? 8
+                : 6
+            }
             directionalLockEnabled={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
           />
@@ -174,7 +219,7 @@ export default class SelectSeatScreen extends React.Component {
           onPress={this.__onNextPress}
           disabled={!this.state.selectedSeats.length}
         />
-
+       
         <SafeAreaView />
       </>
     );
@@ -200,10 +245,10 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flex: 1,
-    //flexDirection: 'row',
+
     borderRadius: 13,
     marginHorizontal: 25,
-    //marginVertical: 10,
+
     shadowColor: '#000',
 
     shadowOffset: {

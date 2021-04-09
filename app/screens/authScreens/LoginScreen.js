@@ -28,8 +28,8 @@ import {SET_USER} from '../../actions/type';
 export default function LoginScreen({navigation}) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('test1@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const __onLogin = () => {
     setIsLoading(true);
