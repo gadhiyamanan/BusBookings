@@ -59,7 +59,7 @@ export default class SelectBusScreen extends React.Component {
       resJourney: props.route.params.resJourney,
       destinationCity: props.route.params.destinationCity,
       originCity: props.route.params.originCity,
-      date:props.route.params.date,
+      date: props.route.params.date,
       isLoading: false,
     };
   }
@@ -130,22 +130,43 @@ export default class SelectBusScreen extends React.Component {
               DistanceArray[DistanceArray.length - 1],
           );
           let busDetailsArray = this.state.busDetails;
-          let seatMap=resBus.val().seatMap.split(',').map(function(item) {
-            return parseInt(item);
-        });
+          let seatMap = resBus
+            .val()
+            .seatMap.split(',')
+            .map(function (item) {
+              return parseInt(item);
+            });
+          let ratingRes = await Database.dataBaseRead(`ratings`);
+          let totalRatings = 0;
+          let ratingCount = 0;
+
+          ratingRes.forEach((element) => {
+            if (element.val().busNo === resBus.val().busNo) {
+              totalRatings = totalRatings + parseInt(element.val().ratings);
+              ratingCount = ratingCount + 1;
+            }
+          });
+          
+        
           busDetailsArray.push({
             busNo: resBus.val().busNo,
             seatMap: seatMap,
             stops: DestinationIndex - originIndex - 1,
             seats: avialbaleSeats,
-            facility: facility.toString().replace('Wifi,', 'Wifi').replace('Tv,', 'Tv').replace(',', ''),
+            facility: facility
+              .toString()
+              .replace('Wifi,', 'Wifi')
+              .replace('Tv,', 'Tv')
+              .replace(',', ''),
             duration: duration,
             price: price,
-            date:this.state.date,
-            routeId:child.val().routeId,
-            originCity:this.state.originCity,
-            destinationCity:this.state.destinationCity,
-            journeyId:child.val().journeyId
+            date: this.state.date,
+            routeId: child.val().routeId,
+            originCity: this.state.originCity,
+            destinationCity: this.state.destinationCity,
+            journeyId: child.val().journeyId,
+            totalRatings: totalRatings,
+            ratingCount: ratingCount,
           });
           this.setState({busDetails: busDetailsArray});
         }
@@ -155,13 +176,13 @@ export default class SelectBusScreen extends React.Component {
   };
 
   __onBusPress = (item) => {
-    this.props.navigation.navigate('selectSeat',{busDetails:item});
+    this.props.navigation.navigate('selectSeat', {busDetails: item});
   };
   renderItem = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.cardContainer}
-        onPress={()=>this.__onBusPress(item)}>
+        onPress={() => this.__onBusPress(item)}>
         <View style={styles.titleContiner}>
           <Text style={styles.title}>S G Travels</Text>
         </View>
@@ -176,12 +197,15 @@ export default class SelectBusScreen extends React.Component {
           <Text>{item.stops} stops</Text>
         </View>
         <View style={styles.raingPriceContainer}>
-          <RatingBar
-            getStar={(data) => null}
-            ratingImageStyle={{height: 17, width: 17}}
-            initial={3}
-            isdisabled
-          />
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <RatingBar
+              getStar={(data) => null}
+              ratingImageStyle={{height: 17, width: 17}}
+              initial={Math.floor(item.totalRatings / item.ratingCount)}
+              isdisabled
+            />
+            <Text>{`(${item.ratingCount})`}</Text>
+          </View>
           <View style={styles.buttonContainer}>
             <Text style={{color: 'white'}}>₹ {item.price}</Text>
           </View>
@@ -202,11 +226,11 @@ export default class SelectBusScreen extends React.Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{marginTop: 10}}
           ListFooterComponent={<View style={{height: 20}} />}
-          ListEmptyComponent={
-            <View style={{alignItems: 'center'}}>
-              <Text>No Bus Found</Text>
-            </View>
-          }
+          // ListEmptyComponent={
+          //   <View style={{alignItems: 'center'}}>
+          //     <Text>No Bus Found</Text>
+          //   </View>
+          // }
         />
       </>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,15 +17,30 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {ArrowIcon} from '../../assets/icons';
 import {RatingBar} from '../../components/RatingBar';
 import moment from 'moment';
+import Database from '../../functions/Database';
+import auth from '@react-native-firebase/auth';
+import {LoadingBar} from '../../components/Dialog/LoadingBar';
 export default function TicketScreen({route}) {
   const {bookedBusDetail} = route.params;
+  const [isLoading, setIsLoading] = useState(false);
   const renderItem = ({item}) => <Text style={styles.darkText}>{item} </Text>;
-  const __onStar = (rating) => {
-    console.log(rating);
+  const __onStar = async (rating) => {
+    setIsLoading(true);
+    let ref = `ratings/${bookedBusDetail.ticketId}`;
+    let value = {
+      ratings: rating,
+      userId: auth().currentUser.uid,
+      ticketId: bookedBusDetail.ticketId,
+      busNo: bookedBusDetail.busNo,
+    };
+    await Database.databaseWrite(ref, value);
+    setIsLoading(false);
   };
+
   return (
     <>
       <Header isback title="Ticket" />
+      <LoadingBar visible={isLoading} />
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <View style={{height: verticalScale(10)}} />
@@ -110,11 +125,15 @@ export default function TicketScreen({route}) {
         </View>
         <View style={styles.starCarContainer}>
           <RatingBar
+            initial={bookedBusDetail.stars}
             getStar={(rating) => __onStar(rating)}
             containerStyle={{justifyContent: 'space-evenly'}}
             isdisabled={
-              moment(new Date()).format('YYYY/MM/DD') <
-              moment(bookedBusDetail.date).format('YYYY/MM/DD')
+              moment(bookedBusDetail.date).format('DD/MM/YYYY') ===
+              'Invalid date'
+                ? moment(parseInt(bookedBusDetail.date)).format('YYYY/MM/DD')
+                : moment(bookedBusDetail.date).format('YYYY/MM/DD') ||
+                  bookedBusDetail.isCancle === true
             }
           />
         </View>

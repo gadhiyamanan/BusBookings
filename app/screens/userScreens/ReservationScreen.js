@@ -95,6 +95,7 @@ export default function ReservationScreen({navigation, route}) {
           isCancle: false,
           bookedDate: new Date(),
           busNo: busDetails.busDetails.busNo,
+          journeyId:busDetails.busDetails.journeyId
         };
         await Database.databaseUpdate(journeyRef, journeyValue);
         await Database.databaseWrite(bookingRef, bookingValue);
@@ -102,7 +103,7 @@ export default function ReservationScreen({navigation, route}) {
         setIsLoading(false);
       })
       .catch((error) => {
-        ToastAndroid.show(error.message, ToastAndroid.LONG);
+        ToastAndroid.show("Last Transaction Not Sucessfull", ToastAndroid.LONG);
       });
   };
 
