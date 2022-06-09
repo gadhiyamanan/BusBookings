@@ -31,7 +31,7 @@ export default function HelpScreen() {
         <View style={styles.space} />
         <View style={{flexDirection: 'row'}}>
           <Text>Name :</Text>
-          <Text> Manan Gadhiya</Text>
+          <Text> Jahnavi Patel</Text>
         </View>
         <View style={styles.space} />
         <View style={{flexDirection: 'row'}}>
@@ -42,14 +42,14 @@ export default function HelpScreen() {
         <View style={{flexDirection: 'row'}}>
           <Text>Phone No. : </Text>
           <TouchableOpacity onPress={() => __onPhonePress()}>
-            <Text style={{color: colors.blue}}>7284974262</Text>
+            <Text style={{color: colors.blue}}>9664948199</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.space} />
         <View style={{flexDirection: 'row'}}>
           <Text>Mail : </Text>
           <TouchableOpacity onPress={() => __onEmailPress()}>
-            <Text style={{color: colors.blue}}>gadhiyamanan18@gmail.com</Text>
+            <Text style={{color: colors.blue}}>jahnavip921@gmail.com</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.space} />

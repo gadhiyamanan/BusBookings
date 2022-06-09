@@ -128,13 +128,14 @@ export default function TicketScreen({route}) {
             initial={bookedBusDetail.stars}
             getStar={(rating) => __onStar(rating)}
             containerStyle={{justifyContent: 'space-evenly'}}
-            isdisabled={
-              moment(bookedBusDetail.date).format('DD/MM/YYYY') ===
-              'Invalid date'
-                ? moment(parseInt(bookedBusDetail.date)).format('YYYY/MM/DD')
-                : moment(bookedBusDetail.date).format('YYYY/MM/DD') ||
-                  bookedBusDetail.isCancle === true
-            }
+            isdisabled={ bookedBusDetail.isCancle === true}
+            // isdisabled={
+            //   moment(bookedBusDetail.date).format('DD/MM/YYYY') ===
+            //   'Invalid date'
+            //     ? moment(parseInt(bookedBusDetail.date)).format('YYYY/MM/DD')
+            //     : moment(bookedBusDetail.date).format('YYYY/MM/DD') ||
+            //       bookedBusDetail.isCancle === true
+            // }
           />
         </View>
       </View>

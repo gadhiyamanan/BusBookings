@@ -9,69 +9,6 @@ import moment from 'moment';
 import {LoadingBar} from '../../components/Dialog/LoadingBar';
 import {CustomButton} from '../../components/Buttoncomponent';
 import auth from '@react-native-firebase/auth';
-const DATA = [
-  {
-    facility: 'AC&FAN | Wifi | Sleeper',
-    seats: '4 seats',
-    duration: '1:45hrs',
-    stops: '2 stops',
-    stars: 4,
-    price: 2000,
-    from: 'Surat',
-    to: 'Ahmedabad',
-    date: '14/02/2021',
-    seats: [1, 5],
-    busNo: 'GJ05RJ2456',
-    ticketId: 'HVHH231123',
-    transactionId: '13354HVHH231123',
-  },
-  {
-    facility: 'AC&FAN | Wifi | Sleeper',
-    seats: '4 seats',
-    duration: '1:45hrs',
-    stops: '2 stops',
-    stars: 3,
-    price: 2500,
-    date: '18/03/2021',
-    from: 'Bhavnagar',
-    to: 'Ahmedabad',
-    seats: [1, 5, 12, 25],
-    busNo: 'GJ05RJ2456',
-    ticketId: 'HVHH231123',
-    transactionId: '13354HVHH231123',
-  },
-
-  {
-    facility: 'AC&FAN | Wifi | Sleeper',
-    seats: '4 seats',
-    duration: '1:45hrs',
-    stops: '2 stops',
-    stars: 5,
-    price: 3000,
-    date: '25/01/2021',
-    from: 'Mehsana',
-    to: 'Dahod',
-    seats: [1, 5, 12, 25, 26, 34],
-    busNo: 'GJ05RJ2456',
-    ticketId: 'HVHH231123',
-    transactionId: '13354HVHH231123',
-  },
-  {
-    facility: 'AC&FAN | Wifi | Sleeper',
-    seats: '4 seats',
-    duration: '1:45hrs',
-    stops: '2 stops',
-    stars: 5,
-    price: 3000,
-    date: '10/02/2021',
-    from: 'Surat',
-    to: 'Patan',
-    seats: [1, 5, 12, 25, 40, 26, 34, 38],
-    busNo: 'GJ05RJ2456',
-    ticketId: 'HVHH231123',
-    transactionId: '13354HVHH231123',
-  },
-];
 
 export default function BookingsScreen({navigation}) {
   const userDetails = useSelector(({user}) => user.userData);
@@ -120,7 +57,7 @@ export default function BookingsScreen({navigation}) {
       });
     });
     setData(data);
-    
+
     setIsLoading(false);
   };
   const __onCancle = async (item) => {
@@ -153,7 +90,7 @@ export default function BookingsScreen({navigation}) {
       {isCancle: true},
     );
     setIsLoading(false);
-    _getData()
+    _getData();
   };
   const __onTicketPress = (item) => {
     navigation.navigate('ticketScreen', {bookedBusDetail: item});

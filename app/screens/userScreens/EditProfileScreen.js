@@ -9,6 +9,7 @@ import {
   Image,
   Touchable,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import {editPictureIcon, myAccountIcon, userIcon} from '../../assets/icons';
 import {CustomButton} from '../../components/Buttoncomponent';
@@ -24,6 +25,7 @@ import SET_USER from '../../actions/type';
 import Database from '../../functions/Database';
 import storage from '@react-native-firebase/storage';
 import {LoadingBar} from '../../components/Dialog/LoadingBar';
+import MyAccountScreen from './MyAccountScreen';
 export default function EditProfileScreen({navigation}) {
   const dispatch = useDispatch();
   const [isMale, setIsMale] = useState('');
@@ -97,16 +99,18 @@ export default function EditProfileScreen({navigation}) {
           }}
           showsVerticalScrollIndicator={false}>
           <View style={{height: 200, justifyContent: 'space-evenly'}}>
-            <TouchableOpacity
+            <View
               style={styles.imageContainerStyle}
               onPress={__changeProfilePic}>
-              <View style={[styles.imageSubContainerStyle]}>
+              <ImageBackground
+                source={myAccountIcon}
+                style={[styles.imageSubContainerStyle]}>
                 <Image source={image} style={styles.image} />
-              </View>
+              </ImageBackground>
               <View style={styles.editImageContainer}>
                 <Image source={editPictureIcon} style={styles.editImage} />
               </View>
-            </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.descriptionContainer}>
             <TextInputComponent
@@ -215,6 +219,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+    
   },
   image: {
     height: '100%',

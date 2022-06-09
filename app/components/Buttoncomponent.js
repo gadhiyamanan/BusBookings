@@ -14,10 +14,12 @@ export function CustomButton({
   buttonContainerStyle,
   buttontitleStyle,
   title,
+  disabled,
   ...other
 }) {
   return (
     <TouchableOpacity
+    disabled={disabled}
       style={[styles.buttonContainer, buttonContainerStyle]}
       {...other}>
       <Text style={[styles.buttontitle, buttontitleStyle]}>

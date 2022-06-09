@@ -11,7 +11,6 @@ import {
   Image,
   TouchableOpacity,
   ToastAndroid,
- 
 } from 'react-native';
 import {calenderIcon, menuIcon} from '../../assets/icons';
 import moment from 'moment';

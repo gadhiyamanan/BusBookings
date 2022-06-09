@@ -231,10 +231,12 @@ export default function AddEditBusScreen({naviagtion, route}) {
             title="Sleeper"
             buttonContainerStyle={[
               styles.radioButton,
-              {backgroundColor: isSleeper ? colors.blue : colors.white},
+              {backgroundColor: isSleeper ?  mode === 'edit'?colors.grey:colors.blue : colors.white},
+              
             ]}
             buttontitleStyle={{color: isSleeper ? colors.white : colors.blue}}
             onPress={() => setIsSleeper(true)}
+            disabled={mode === 'edit'}
           />
           <CustomButton
             title="Seater"
@@ -242,10 +244,11 @@ export default function AddEditBusScreen({naviagtion, route}) {
             buttontitleStyle={{color: isSleeper ? colors.blue : colors.white}}
             buttonContainerStyle={[
               styles.radioButton,
-              {backgroundColor: isSleeper ? colors.white : colors.blue},
+              {backgroundColor: isSleeper ? colors.white : mode === 'edit'?colors.grey:colors.blue},
             ]}
             buttontitleStyle={{color: isSleeper ? colors.blue : colors.white}}
             onPress={() => setIsSleeper(false)}
+            disabled={mode === 'edit'}
           />
         </View>
         <View style={styles.space} />

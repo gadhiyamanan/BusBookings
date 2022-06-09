@@ -7,12 +7,11 @@ import colors from '../../constants/colors';
 export function LoadingBar({visible}) {
   return (
     <Modal
-    isVisible={visible}
+      isVisible={visible}
       style={styles.modalStyle}
       useNativeDriver={true}
       animationIn="fadeIn"
-      animationOut="fadeOut"
-      >
+      animationOut="fadeOut">
       <View style={styles.cardStyle}>
         <LottieView
           source={loading}
@@ -30,15 +29,13 @@ const styles = StyleSheet.create({
     margin: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'center',
-    // animationIn='fadeIn',
-    // animationOut='fadeOut'
   },
   cardStyle: {
     backgroundColor: 'white',
     shadowOpacity: 0.25,
     shadowRadius: 5,
     //elevation: 5,
-   // elevation: 10,
+    // elevation: 10,
     height: 100,
     width: 150,
     justifyContent: 'center',

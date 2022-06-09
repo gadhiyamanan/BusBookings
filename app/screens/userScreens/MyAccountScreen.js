@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar,
   Image,
+  ImageBackground
 } from 'react-native';
 import {myAccountIcon} from '../../assets/icons';
 import {CustomButton} from '../../components/Buttoncomponent';
@@ -32,9 +33,9 @@ export default function MyAccountScreen({navigation}) {
       <View style={styles.root}>
         <View style={styles.container}>
           <View style={styles.imageContainerStyle}>
-            <View style={[styles.imageSubContainerStyle]}>
+            <ImageBackground  source={myAccountIcon} style={[styles.imageSubContainerStyle]}>
               <Image source={user.profilePic?{uri:user.profilePic}:myAccountIcon} style={styles.image} />
-            </View>
+            </ImageBackground >
           </View>
           <View style={{height: 10}} />
           <View style={{alignItems: 'center'}}>

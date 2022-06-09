@@ -146,8 +146,7 @@ export default class SelectBusScreen extends React.Component {
               ratingCount = ratingCount + 1;
             }
           });
-          
-        
+
           busDetailsArray.push({
             busNo: resBus.val().busNo,
             seatMap: seatMap,

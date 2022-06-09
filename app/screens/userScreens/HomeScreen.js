@@ -36,7 +36,11 @@ export default function HomeScreen({navigation}) {
   const [busDetails, setBusDetails] = useState([]);
 
   async function __onSeachBusPress() {
-    if (originCity === destinationCity) {
+    if (originCity === '') {
+      ToastAndroid.show('Select Origin City', ToastAndroid.SHORT);
+    } else if (destinationCity === '') {
+      ToastAndroid.show('Select Destination City', ToastAndroid.SHORT);
+    } else if (originCity === destinationCity) {
       ToastAndroid.show(
         'Origin City And Destination City Must Be Different',
         ToastAndroid.SHORT,
@@ -53,7 +57,7 @@ export default function HomeScreen({navigation}) {
       });
     }
   }
-  
+
   return (
     <>
       <CalenderPicker
